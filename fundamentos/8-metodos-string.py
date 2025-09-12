@@ -12,4 +12,4 @@ print(movieName.find("u")) # retorna o primeiro indice encontrado do caractere f
 print(f'find: {movieDescription.find("u")}')
 print(movieDescription.count("u")) # se mais de um, retorna a quantidade de caracteres nessa string
 print(movieName.replace("op", "teste")) # troca os caracteres fornecidos pelos informados em seguida
-print(movieDescription.split(',')) # separa em um vetor as frases quebrando pelo valor fornecido removendo-o
+print(movieDescription.split(',')) # separa em uma lista as frases quebrando pelo valor fornecido removendo-o
