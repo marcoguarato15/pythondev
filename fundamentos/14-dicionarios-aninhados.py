@@ -66,6 +66,16 @@ nome3 = input("prod 3: ")
 preco3 = float(input("preco 3: "))
 
 # exercício de dicionário
+
+"""
+    nome1 = Arroz
+    nome2 = Feijão
+    nome3 = Macarrão
+
+    preco1 = 15.50
+    preco2 = 8.90
+    preco3 = 6.75
+"""
 dict = {
     nome1 : preco1,
     nome2 : preco2,
