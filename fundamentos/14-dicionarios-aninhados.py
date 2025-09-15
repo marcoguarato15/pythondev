@@ -47,24 +47,6 @@ preco2 = float(input("preco 2: "))
 nome3 = input("prod 3: ")
 preco3 = float(input("preco 3: "))
 
-nome1 = input("prod 1: ")
-preco1 = float(input("preco 1: "))
-
-nome2 = input("prod 2: ")
-preco2 = float(input("preco 2: "))
-
-nome3 = input("prod 3: ")
-preco3 = float(input("preco 3: "))
-
-nome1 = input("prod 1: ")
-preco1 = float(input("preco 1: "))
-
-nome2 = input("prod 2: ")
-preco2 = float(input("preco 2: "))
-
-nome3 = input("prod 3: ")
-preco3 = float(input("preco 3: "))
-
 # exercício de dicionário
 
 """
