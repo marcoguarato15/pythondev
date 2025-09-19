@@ -46,7 +46,7 @@ def register():
     print(f"O filme {name} de {releaseYear} é R${price:.2f} e tem a nota de {imdbRating:.2f} ")
     index = len(movieDict)
     movieDict.update({
-        "Movie2" : {"id" : index,
+        f"Movie{index + 1}" : {"id" : index,
         "name" : name,
         "releaseYear" : releaseYear,
         "imdbRating" : imdbRating,
