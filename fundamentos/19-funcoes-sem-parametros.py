@@ -1,3 +1,6 @@
+import pprint
+
+pp = pprint.PrettyPrinter(depth = 4)
 # 1 - função para mostrar uma mensagem
 def welcome():
     print("Olá! Bem vindo ao sistema de filmes!")
@@ -26,6 +29,13 @@ def calculateAverage():
 print(f"A média de notas é: {calculateAverage():.2f}")
 
 # 3 - função para cadastrar um filme
+movieDict = {
+    "Movie1" : {"id" : 0,
+        "name" : "Mario",
+        "releaseYear" : 2023,
+        "imdbRating" : 8.0,
+        "price" : 70.0}
+}
 
 def register():
     name = input("Nome do filme: ")
@@ -34,5 +44,17 @@ def register():
     price = float(input("Preço do filme: "))
 
     print(f"O filme {name} de {releaseYear} é R${price:.2f} e tem a nota de {imdbRating:.2f} ")
+    index = len(movieDict)
+    movieDict.update({
+        "Movie2" : {"id" : index,
+        "name" : name,
+        "releaseYear" : releaseYear,
+        "imdbRating" : imdbRating,
+        "price" : price}
+        })
+
 
 register()
+
+
+pp.pprint(movieDict)
