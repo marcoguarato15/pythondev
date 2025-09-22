@@ -1,3 +1,4 @@
+# Módulo de estatísticas
 import statistics
 st = statistics
 

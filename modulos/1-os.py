@@ -1,3 +1,4 @@
+# Módulo para operações do sistema operacional SO (OS)
 import os
 
 ## 1 - Consultar os métodos do módulo OS
