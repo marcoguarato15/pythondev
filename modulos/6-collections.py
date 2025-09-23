@@ -23,7 +23,7 @@ b = sorted(studentsAge.items(), key=itemgetter(1))
 print(dict(a))
 print(b)
 
-# 4 - Fazendo uma "Fila"(na verdade é uma lista) com deque de collections
+# 4 - Fazendo uma "Fila"(na verdade é uma lista pois é possível adicionar no final e remover no começo) com deque de collections
 deq = deque([20, 40, 60, 80])
 print(deq)
 deq.appendleft(10)
