@@ -21,7 +21,15 @@ g2.releaseYear = 2017
 g2.multiplayer = True
 g2.note = 8.0
 
+# Jogo 3 
+g3 = Game()
+g3.name = "League of Legends"
+g3.releaseYear = 2010
+g3.multiplayer = True
+g3.note = 10.0
+
 ## Informações dos jogos
 print("--- Informações dos jogos ---")
 print(g1.__str__())
 print(str(g2))
+print(g3)
