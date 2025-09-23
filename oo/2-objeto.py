@@ -24,4 +24,4 @@ g2.note = 8.0
 ## Informações dos jogos
 print("--- Informações dos jogos ---")
 print(g1.__str__())
-print(g2.__str__())
+print(str(g2))
