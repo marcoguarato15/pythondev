@@ -8,7 +8,7 @@ class Biblioteca:
         self.name = name
         self._active = False # '__' antes da variável significa que ela é privada não sendo mais possível alterá-la diretamente
                               # Apenas um '_' significa que é protegida, não deve ser alterada diretamente mas ainda é possível
-        self.__avaliacao = []
+        self._avaliacao = []
         Biblioteca.bibliotecas.append(self)
     
     def __str__(self):
@@ -16,9 +16,9 @@ class Biblioteca:
         return self.name + " | " +  self.getActive
     
     def listLibraries():
-        print(f"{'Nome da biblioteca'.ljust(25)} | Status")
+        print(f"{'Nome da biblioteca'.ljust(25)} | {'Nota média'.ljust(25)} | Status")
         for l in Biblioteca.bibliotecas:
-            print(f"{l.name.ljust(25)} | {l.getActive}")
+            print(f"{l.name.ljust(25)} | {str(l.avaliar).ljust(25)} |{l.getActive}")
 
     def setActive(self): # Método SET
         self._active = not self._active
@@ -31,9 +31,18 @@ class Biblioteca:
     def get__name__(self):
         return __name__
     
+    @property
+    def avaliar(self):
+        if not self._avaliacao:
+            return '-'
+        else:
+            soma = sum(avaliacao._note for avaliacao in self._avaliacao)
+            media = round(soma / len(self._avaliacao), 1)
+            return media
+
     def setAvaliacao(self, client, note):
         avaliacao = Avaliacao(client, note)
-        self.__avaliacao.append(avaliacao)
+        self._avaliacao.append(avaliacao)
     
 print(__name__)
 
