@@ -3,8 +3,13 @@ from model.biblioteca import Biblioteca
 cityLibrary = Biblioteca("Biblioteca da Cidade")
 shoppingLibrary = Biblioteca("Biblioteca do Shopping")
 
-# cityLibrary.__active = True # não funciona mais pois tem dois '_' ditando que é um atributo privado
-shoppingLibrary.setActive() # Fazer desta forma pois é privada e possui o metodo justamente para não acessar a variável diretamente
+# cityLibrary.__active = True   # devido a convenção '_' não devemos utilizar mais esse meio para acessar a variável
+shoppingLibrary.setActive()     # Fazer desta forma pois é uma variável privada
+
+shoppingLibrary.avaliar('Fulano',2)
+shoppingLibrary.avaliar('Ciclano',1)
+shoppingLibrary.avaliar('Deltrano',3)
+shoppingLibrary.avaliar('Acrano',5)
 
 def main1():
     Biblioteca.listLibraries()
