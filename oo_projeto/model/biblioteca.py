@@ -1,17 +1,23 @@
 class Biblioteca:
-    name = ""
-    active = False
+    bibliotecas = []
 
-cityLibrary = Biblioteca()
-cityLibrary.name = "Biblioteca da cidade"
-cityLibrary.active = True
+    def __init__(self, name):
+        self.name = name
+        self.active = False
+        Biblioteca.bibliotecas.append(self)
+    
+    def __str__(self):
+        # return "Nome:",self.name ,"Ativo:",self.active # retorna uma tupla
+        return self.name + " | " +  str(self.active)
+    
+    def listLibraries():
+        for l in Biblioteca.bibliotecas:
+            print(f"{l.name} | {"Ativa" if l.active else "Inativa"}")
+    
+cityLibrary = Biblioteca("Biblioteca da Cidade")
+shoppingLibrary = Biblioteca("Biblioteca do Shopping")
 
-shoppingLibary = Biblioteca()
+print(cityLibrary)
+print(shoppingLibrary)
 
-libraries = [cityLibrary, shoppingLibary]
-
-# print(vars(cityLibrary))
-# print(vars(shoppingLibary))
-
-for l in libraries:
-    print(vars(l))
+Biblioteca.listLibraries()
