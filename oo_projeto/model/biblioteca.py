@@ -6,7 +6,7 @@ class Biblioteca:
 
     def __init__(self, name):
         self.name = name
-        self.__active = False # '__' antes da variável significa que ela é privada não sendo mais possível alterá-la diretamente
+        self._active = False # '__' antes da variável significa que ela é privada não sendo mais possível alterá-la diretamente
                               # Apenas um '_' significa que é protegida, não deve ser alterada diretamente mas ainda é possível
         self.__avaliacao = []
         Biblioteca.bibliotecas.append(self)
@@ -21,11 +21,11 @@ class Biblioteca:
             print(f"{l.name.ljust(25)} | {l.getActive}")
 
     def setActive(self): # Método SET
-        self.__active = not self.__active
+        self._active = not self._active
 
     @property # Método GET
     def getActive(self):
-        return "Ativa" if self.__active else "Inativa"
+        return "Ativa" if self._active else "Inativa"
     
     @property
     def get__name__(self):
