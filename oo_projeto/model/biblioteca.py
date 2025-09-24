@@ -1,4 +1,4 @@
-from avaliacao import Avaliacao
+from model.avaliacao import Avaliacao
 
 class Biblioteca:
     bibliotecas = [] # isto é ruim pois é uma variável estática, se eu quiser uma biblioteca fora do país e contá-la
