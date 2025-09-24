@@ -1,5 +1,6 @@
 class Biblioteca:
-    bibliotecas = []
+    bibliotecas = [] # isto é ruim pois é uma variável estática, se eu quiser uma biblioteca fora do país e contá-la
+                     # de forma diferente ele irá adicionar automaticamente nesta variável(lista)
 
     def __init__(self, name):
         self.name = name
