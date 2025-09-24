@@ -1,3 +1,5 @@
+from avaliacao import Avaliacao
+
 class Biblioteca:
     bibliotecas = [] # isto é ruim pois é uma variável estática, se eu quiser uma biblioteca fora do país e contá-la
                      # de forma diferente ele irá adicionar automaticamente nesta variável(lista)
@@ -6,6 +8,7 @@ class Biblioteca:
         self.name = name
         self.__active = False # '__' antes da variável significa que ela é privada não sendo mais possível alterá-la diretamente
                               # Apenas um '_' significa que é protegida, não deve ser alterada diretamente mas ainda é possível
+        self.__avaliacao = []
         Biblioteca.bibliotecas.append(self)
     
     def __str__(self):
@@ -27,6 +30,10 @@ class Biblioteca:
     @property
     def get__name__(self):
         return __name__
+    
+    def setAvaliacao(self, client, note):
+        avaliacao = Avaliacao(client, note)
+        self.__avaliacao.append(avaliacao)
     
 print(__name__)
 
