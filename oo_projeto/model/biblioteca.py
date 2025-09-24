@@ -18,7 +18,7 @@ class Biblioteca:
     def listLibraries():
         print(f"{'Nome da biblioteca'.ljust(25)} | {'Nota média'.ljust(25)} | Status")
         for l in Biblioteca.bibliotecas:
-            print(f"{l.name.ljust(25)} | {str(l.avaliar).ljust(25)} |{l.getActive}")
+            print(f"{l.name.ljust(25)} | {str(l.mediaAvaliacao).ljust(25)} | {l.getActive}")
 
     def setActive(self): # Método SET
         self._active = not self._active
@@ -32,7 +32,7 @@ class Biblioteca:
         return __name__
     
     @property
-    def avaliar(self):
+    def mediaAvaliacao(self):
         if not self._avaliacao:
             return '-'
         else:
@@ -40,7 +40,7 @@ class Biblioteca:
             media = round(soma / len(self._avaliacao), 1)
             return media
 
-    def setAvaliacao(self, client, note):
+    def avaliar(self, client, note):
         avaliacao = Avaliacao(client, note)
         self._avaliacao.append(avaliacao)
     
