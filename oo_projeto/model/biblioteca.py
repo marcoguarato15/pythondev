@@ -55,7 +55,7 @@ class Biblioteca:
             return "Não é um item cadastrável!"
         
     def getItems(self):
-        print(f"Itens da Biblioteca {self.name}")
+        print(f"Itens da Biblioteca: {self.name}")
         print(25 * "-")
         if self._items:
             for i, item in enumerate(self._items, start=1):
