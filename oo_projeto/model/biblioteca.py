@@ -60,10 +60,10 @@ class Biblioteca:
         if self._items:
             for i, item in enumerate(self._items, start=1):
                 if hasattr(item, "_isbn"):
-                    bookMsg = f"{i}. (Livro) -> {item}"
+                    bookMsg = f"{i}. (Livro) -> Nome: {item._title.ljust(22)} | Autor: {item._author.ljust(20)} | Preço: {str(item._price).ljust(20)} | ISBN: {item._isbn}"
                     print(bookMsg)
                 elif hasattr(item, "_edicao"):
-                    magazineMsg = f"{i}. (Revista) -> {item}"
+                    magazineMsg = f"{i}. (Revista) -> Nome: {item._title.ljust(20)} | Autor: {item._author.ljust(20)} | Preço: {str(item._price).ljust(20)} | Edição: {item._edicao}"
                     print(magazineMsg)
         else:
             print("Biblioteca sem itens")
