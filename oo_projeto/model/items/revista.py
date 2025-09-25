@@ -8,3 +8,5 @@ class Revista(ItemBiblioteca):
     def __str__(self):
         return self._title + " " + self._author + " " + str(self._price) + " " + self._edicao
     
+    def applyDiscount(self):
+        self._price -= self._price * 0.20
