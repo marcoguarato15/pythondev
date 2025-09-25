@@ -53,6 +53,20 @@ class Biblioteca:
             self._items.append(item)
         else:
             return "Não é um item cadastrável!"
+        
+    def getItems(self):
+        print(f"Itens da Biblioteca {self.name}")
+        print(25 * "-")
+        if self._items:
+            for i, item in enumerate(self._items, start=1):
+                if hasattr(item, "_isbn"):
+                    bookMsg = f"{i}. (Livro) -> {item}"
+                    print(bookMsg)
+                elif hasattr(item, "_edicao"):
+                    magazineMsg = f"{i}. (Revista) -> {item}"
+                    print(magazineMsg)
+        else:
+            print("Biblioteca sem itens")
     
 print(__name__)
 
