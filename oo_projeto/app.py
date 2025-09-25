@@ -16,12 +16,16 @@ shoppingLibrary.avaliar('Deltrano',3)
 shoppingLibrary.avaliar('Acrano',5)
 
 ## Criando items Livro e Revista de ItemsBiblioteca
-livro1 = Livro("1984", "Geoge Orwell", 30.0, "412-5123")
+livro1 = Livro("1984", "Geoge Orwell", 30.0, "9786147643236")
+livro2 = Livro("Brave New World", "Aldous Huxley", 25.0, "9781541235129")
 revista1 = Revista("National Geographic", "Jhon Doe", 15.0, "Quinta")
+revista2 = Revista("Pixé", "Eduardo Mahon", 20.0, "Trigésima Quinta")
 
 ## Adicionando items às bibliotecas
 cityLibrary.add_item(livro1)
 cityLibrary.add_item(revista1)
+cityLibrary.add_item(livro2)
+cityLibrary.add_item(revista2)
 
 def main():
     Biblioteca.listLibraries()
