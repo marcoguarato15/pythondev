@@ -19,6 +19,10 @@ shoppingLibrary.avaliar('Acrano',5)
 livro1 = Livro("1984", "Geoge Orwell", 30.0, "412-5123")
 revista1 = Revista("National Geographic", "Jhon Doe", 15.0, "Quinta")
 
+## Adicionando items às bibliotecas
+cityLibrary.add_item(livro1)
+cityLibrary.add_item(revista1)
+
 def main():
     Biblioteca.listLibraries()
                                       # será sempre correto pois é a partir de onde o arquivo é executado
@@ -29,7 +33,11 @@ def main():
 
     ## Mostrando os itens
     print(vars(livro1), vars(revista1))     # Com o método vars
-    print(livro1, " | ", revista1)                 # Com o método __str__ de cada item
+    print(livro1, " | ", revista1)          # Com o método __str__ de cada item
+
+    ## Mostrando os itens através de um método
+    cityLibrary.getItems()
+    shoppingLibrary.getItems()
 
 if __name__ == "__main__":          
     main()
