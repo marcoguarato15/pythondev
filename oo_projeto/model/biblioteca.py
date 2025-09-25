@@ -18,7 +18,7 @@ class Biblioteca:
     def listLibraries():
         print(f"{'Nome da biblioteca'.ljust(25)} | {'Nota média'.ljust(25)} | Status")
         for l in Biblioteca.bibliotecas:
-            print(f"{l.name.ljust(25)} | {str(l.setMediaAvaliacao).ljust(25)} | {l.getActive}")
+            print(f"{l.name.ljust(25)} | {str(l.getMediaAvaliacao).ljust(25)} | {l.getActive}")
 
     def setActive(self): # Método SET
         self._active = not self._active
@@ -31,8 +31,10 @@ class Biblioteca:
     def get__name__(self):
         return __name__
     
+    # SE não colocar @property ele retorna a instância do objeto
+    # Pois é necessário colocar as chaves sem o @property
     @property
-    def setMediaAvaliacao(self):
+    def getMediaAvaliacao(self):
         if not self._avaliacao:
             return '-'
         else:
