@@ -5,6 +5,7 @@ from model.items.revista import Revista
 ## Definindo/Cirando livrarias
 cityLibrary = Biblioteca("Biblioteca da Cidade")
 shoppingLibrary = Biblioteca("Biblioteca do Shopping")
+bazaarAne = Biblioteca("Bazar da Dona Ana")
 
 ## Definindo valores as livrarias
 # cityLibrary.__active = True   # devido a convenção '_' não devemos utilizar mais esse meio para acessar a variável
@@ -21,11 +22,21 @@ livro2 = Livro("Brave New World", "Aldous Huxley", 25.0, "9781541235129")
 revista1 = Revista("National Geographic", "Jhon Doe", 15.0, "Quinta")
 revista2 = Revista("Pixé", "Eduardo Mahon", 20.0, "Trigésima Quinta")
 
+livro3 = Livro("1984", "Geoge Orwell", 30.0, "9786147643236")
+livro4 = Livro("Brave New World", "Aldous Huxley", 25.0, "9781541235129")
+revista3 = Revista("National Geographic", "Jhon Doe", 15.0, "Quinta")
+revista4 = Revista("Pixé", "Eduardo Mahon", 20.0, "Trigésima Quinta")
+
 ## Adicionando items às bibliotecas
 cityLibrary.add_item(livro1)
 cityLibrary.add_item(revista1)
 cityLibrary.add_item(livro2)
 cityLibrary.add_item(revista2)
+
+bazaarAne.add_item(livro3)
+bazaarAne.add_item(revista3)
+bazaarAne.add_item(livro4)
+bazaarAne.add_item(revista4)
 
 def main():
     ## Mostrando as bibliotecas pelo método
@@ -42,17 +53,17 @@ def main():
     # print(livro1, " | ", revista1)          # Com o método __str__ de cada item
 
     ## Mostrando os itens através de um método
-    print("Livros e revistas da Biblioteca " + 10 * "-")
+    print("Livros e revistas da Biblioteca " + 100 * "-")
     cityLibrary.getItems()
     shoppingLibrary.getItems()
     
-    print("")
-    print("Livros e revistas da Vendinha da Dona Ana " + 10 * "-")
-    livro1.applyDiscount()
-    livro2.applyDiscount()
-    revista1.applyDiscount()
-    revista2.applyDiscount()
-    cityLibrary.getItems()
+    print()
+    print("Livros e revistas do Bazar da Dona Ana" + 93 * "-")
+    livro3.applyDiscount()
+    livro4.applyDiscount()
+    revista3.applyDiscount()
+    revista4.applyDiscount()
+    bazaarAne.getItems()
 
 
 
