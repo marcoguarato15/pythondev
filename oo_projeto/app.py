@@ -28,20 +28,33 @@ cityLibrary.add_item(livro2)
 cityLibrary.add_item(revista2)
 
 def main():
-    Biblioteca.listLibraries()
-                                      # será sempre correto pois é a partir de onde o arquivo é executado
-                                      # SE eu tentar executar algo deste arquivo por fora, o __name__ será o caminho do import
+    ## Mostrando as bibliotecas pelo método
+    # Biblioteca.listLibraries()
+    
+                                    # será sempre correto pois é a partir de onde o arquivo é executado
+                                    # SE eu tentar executar algo deste arquivo por fora, o __name__ será o caminho do import
     # print(cityLibrary.get__name__)  # como neste caso é model.biblioteca
-    print(__name__)                 # e aqui como método executado no arquivo citado no código cmd será __main__
+    # print(__name__)                 # e aqui como método executado no arquivo citado no código cmd será __main__
     # print(type(main))
 
     ## Mostrando os itens
-    print(vars(livro1), vars(revista1))     # Com o método vars
-    print(livro1, " | ", revista1)          # Com o método __str__ de cada item
+    # print(vars(livro1), vars(revista1))     # Com o método vars
+    # print(livro1, " | ", revista1)          # Com o método __str__ de cada item
 
     ## Mostrando os itens através de um método
+    print("Livros e revistas da Biblioteca " + 10 * "-")
     cityLibrary.getItems()
     shoppingLibrary.getItems()
+    
+    print("")
+    print("Livros e revistas da Vendinha da Dona Ana " + 10 * "-")
+    livro1.applyDiscount()
+    livro2.applyDiscount()
+    revista1.applyDiscount()
+    revista2.applyDiscount()
+    cityLibrary.getItems()
+
+
 
 if __name__ == "__main__":          
     main()
