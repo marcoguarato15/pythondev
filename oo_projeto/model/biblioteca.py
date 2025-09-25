@@ -67,7 +67,3 @@ class Biblioteca:
                     print(magazineMsg)
         else:
             print("Biblioteca sem itens")
-    
-print(__name__)
-
-    
