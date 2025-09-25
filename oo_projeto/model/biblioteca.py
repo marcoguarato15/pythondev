@@ -1,4 +1,5 @@
 from model.avaliacao import Avaliacao
+from model.items.item_biblioteca import ItemBiblioteca
 
 class Biblioteca:
     bibliotecas = [] # isto é ruim pois é uma variável estática, se eu quiser uma biblioteca fora do país e contá-la
@@ -9,6 +10,7 @@ class Biblioteca:
         self._active = False # '__' antes da variável significa que ela é privada não sendo mais possível alterá-la diretamente
                               # Apenas um '_' significa que é protegida, não deve ser alterada diretamente mas ainda é possível
         self._avaliacao = []
+        self._items = []
         Biblioteca.bibliotecas.append(self)
     
     def __str__(self):
@@ -45,6 +47,12 @@ class Biblioteca:
     def avaliar(self, client, note):
         avaliacao = Avaliacao(client, note)
         self._avaliacao.append(avaliacao)
+
+    def add_item(self, item):
+        if isinstance(item, ItemBiblioteca):
+            self._items.append(item)
+        else:
+            return "Não é um item cadastrável!"
     
 print(__name__)
 
