@@ -19,16 +19,23 @@ Base.metadata.create_all(engine)
 
 # 1 - Adicionar filmes
 def addFilme(nome, ano, nota):
-    Session = sessionmaker(bind=engine)
-    session = Session()
     filme = (Filme(nome= nome, ano= ano, nota= nota))
-    session.add(filme)
 
-    session.commit()
-    session.close()
+    if filme.nome != "" and filme.ano != "" and filme.nota != "":
+        Session = sessionmaker(bind=engine)
+        session = Session()
+        session.add(filme)
 
-addFilme("Homem Aranha", 2016, 9.8)
-addFilme("Sonic", 2020, 8.5)
+        session.commit()
+        session.close()
+        
+        return 1
+    else:
+        return -1
+    
+
+# addFilme("Homem Aranha", 2016, 9.8)
+# addFilme("Sonic", 2020, 8.5)
 
 
 # 2 - Atualizar um filme
@@ -38,11 +45,11 @@ def updateFilme(id, nome=None, ano=None, nota=None):
 
     filme = session.query(Filme).filter_by(id=id).first()
     if filme:
-        if nome != None:
+        if nome != None or nome != "":
             filme.nome = nome
-        if ano != None:
+        if ano != None or ano != "":
             filme.ano = ano
-        if nota != None:
+        if nota != None or nota != "":
             filme.nota = nota
         session.commit()
         session.close()
@@ -51,8 +58,8 @@ def updateFilme(id, nome=None, ano=None, nota=None):
         session.close()
         return -1
 
-resUpd = updateFilme(1, "O Dia Depois de Amanhã", 2015, 10.0)
-print(f"{resUpd}")
+# resUpd = updateFilme(1, "O Dia Depois de Amanhã", 2015, 10.0)
+# print(f"{resUpd}")
 
 
 # 3 - Deletar um filme
@@ -71,5 +78,5 @@ def delFilme(id):
         session.close()
         return -1
 
-resDel = delFilme(2)
-print(f"{delFilme}")
+# resDel = delFilme(2)
+# print(f"{delFilme}")
