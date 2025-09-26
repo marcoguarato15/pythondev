@@ -1,2 +1,9 @@
-pip install streamlit
-pipinstall SQLAlchemy
+## API de desenvolvimento WEB (não gostei muito...)
+$ pip install streamlit
+
+## ORM para mexer com banco de dados relacional (simples de usar, mas tomar cuidado com a implementação para não 
+##      gerar entradas que possibilitam SQL injection!)
+$ pipinstall SQLAlchemy
+
+## API para comunicação com apenas o BD postgreSQL
+pip install psycopg2
