@@ -5,21 +5,25 @@ def connect():
     conexao = sq.connect("titulo.db")
     return conexao
 
-def addFilme(nome, ano, nota):
+def addFilme(nome=None, ano=None, nota=None):
     conexao = connect()
     cursor = conexao.cursor()
 
-    cursor.execute(
-        """
-            INSERT INTO filmes (nome, ano, nota)
-            VALUES (?, ?, ?)
-        """,
-        (nome, ano, nota)
-    )
+    if nome != None and ano != None and nota != None:
+        cursor.execute(
+            """
+                INSERT INTO filmes (nome, ano, nota)
+                VALUES (?, ?, ?)
+            """,
+            (nome, ano, nota)
+        )
 
-    conexao.commit()
-    conexao.close()
-    return 1
+        conexao.commit()
+        conexao.close()
+        return 1
+    else:
+        conexao.close()
+        return -1
 
 def getFilmes():
     conexao = connect()
@@ -48,9 +52,6 @@ def delFilme(id_filme):
 
 # Apenas um teste de alteração
 def updFilme(id, nome, ano, nota):
-
-
-
     conexao = connect()
     cursor = conexao.cursor()
 
