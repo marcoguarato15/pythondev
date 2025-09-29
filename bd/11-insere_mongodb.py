@@ -1,7 +1,13 @@
 from pymongo import MongoClient
 from pymongo import ASCENDING
 
-client = MongoClient()
+client = MongoClient()  # host: str | Sequence[str] | None = None,
+                        # port: int | None = None,
+                        # document_class: Any | None = None,
+                        # tz_aware: bool | None = None,  # Significa entre dados de TIME ou DATETIME cientes ou ingênuos(AWARE/NAIVE)
+                        # connect: bool | None = None,
+                        # type_registry: TypeRegistry | None = None,
+                        # **kwargs: Any
 mydb = client.dbposts
 mycollection = mydb.posts
 
