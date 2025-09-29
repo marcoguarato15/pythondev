@@ -16,9 +16,10 @@ mycollection.drop_index("author.name_1")
 post1 = {
     "title": "FastAPI",
     "category": "Backend",
+    "level": "Intermediario",
     "author": {
-        "name": "Rodrigo",
-        "email": "rodrigo@email.com"
+        "name": "Luna",
+        "email": "luna@email.com"
     }
 }
 
