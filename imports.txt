@@ -7,3 +7,6 @@ $ pipinstall SQLAlchemy
 
 ## API para comunicação com apenas o BD postgreSQL
 pip install psycopg2
+
+## API para mexer com mongoDB
+pip install pymongo
