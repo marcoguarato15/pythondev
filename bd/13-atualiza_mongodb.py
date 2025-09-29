@@ -4,7 +4,9 @@ client = MongoClient()
 mydb = client.dbposts
 mycollections = mydb["posts"]
 
+# filter
 old_value = {"level" : "Intermediario"}
+# update
 new_value = {"$set": {"level":"Iniciante"}}
 
 # acha o primeiro e o altera (filter, update)
