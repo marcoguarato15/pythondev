@@ -4,7 +4,7 @@ client = MongoClient()
 mydb = client.dbposts
 mycollection = mydb.posts
 
-result = mycollection.find({})
+result = mycollection.find() # find({"author.name": "Rodrigo"}) Para um find com filter
 
 # print(result)       # Trás a instância do fetch como Objeto
 # print(vars(result)) # NÃO trás os dados do objeto, trás essas informações: {'_collection': Collection(Database(MongoClient(host=['localhost:27017'],  
