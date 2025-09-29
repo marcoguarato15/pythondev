@@ -19,3 +19,5 @@ if result.acknowledged:
     print("Documento inserido com sucesso")
 else:
     print("Falha ao inserir documento")
+
+client.close()
