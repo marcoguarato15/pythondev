@@ -1,0 +1,5 @@
+Olá Mundo!
+O tempo está bem maravilhoso
+Isso é um teste
+Ruby é complicado
+Python é complicado...
