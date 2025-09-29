@@ -13,17 +13,18 @@ from conn_post_psycopg import conn
 ## 1 - Inserindo dados
 
 games = [
-    ("Star Wars Survivor", 2023, 9.0),
-    ("Luigis Mission 3", 2019, 9.0)
+    ("Valor Aleatorio", 2020, 8.0),
+    ("Teste", 2016, 7.0)
 ]
 
 ## Cria varios cursores e os executa após sua criação
 cursor = conn.cursor()
 for game in games:
-    cursor.execute(
+    cursor.execute( # %d e %f não funcionam não sei por que.... assim %s converte todos em string e o próprio 
+                    # pgsql converte depois para inteiro e float...
         """
             INSERT INTO games (name, year, score)
-            VALUES (%s, %s, %s)
+            VALUES (%s, %s, %s) 
         """,
         game
     )
