@@ -18,5 +18,6 @@ with zipfile.ZipFile("dados/names.zip", "w") as zip:
 
 # 4 - Compactar todos arquivos
 with zipfile.ZipFile("dados/code.zip", "w") as zip:
+    # Sem o recursive=True ele pega apenas os dados do diretório atual sem pegar os filhos
     for file in glob.glob("*", recursive=True):
         zip.write(file)
