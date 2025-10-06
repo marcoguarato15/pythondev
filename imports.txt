@@ -13,3 +13,6 @@ pip install pymongo
 
 ## API para mexer com requisições http async (sem sincronicidade)
 pip install aiohttp
+
+## API para manipulação de dados em planilhas com Python
+pip install openpyxl
