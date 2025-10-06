@@ -2,6 +2,8 @@ __pycache__
 # Databases
 titulo.db
 banco.db
+code.zip
+names.zip
 
 # conexão com o banco
-conn_post_psycopg.py
+conn_post_psycopg.py 
