@@ -37,9 +37,9 @@ df_aba4 = pd.DataFrame(dados_aba4)
 caminho_arquivo = "dados/clientes.xlsx"
 
 with pd.ExcelWriter(caminho_arquivo, engine="openpyxl") as writer:
-    df_aba1.to_excel(writer, sheet_name="Aba1")
-    df_aba2.to_excel(writer, sheet_name="Aba2")
-    df_aba3.to_excel(writer, sheet_name="Aba3")
-    df_aba4.to_excel(writer, sheet_name="Aba4")
+    df_aba1.to_excel(writer, sheet_name="Aba1", index=False)
+    df_aba2.to_excel(writer, sheet_name="Aba2", index=False)
+    df_aba3.to_excel(writer, sheet_name="Aba3", index=False)
+    df_aba4.to_excel(writer, sheet_name="Aba4", index=False)
 
 print(f"Arquivo excel com 4 abas criado em '{caminho_arquivo}'")
