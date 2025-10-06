@@ -2,6 +2,8 @@ __pycache__
 # Databases
 titulo.db
 banco.db
+
+# Arquivos zip
 code.zip
 names.zip
 
