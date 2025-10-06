@@ -7,7 +7,7 @@ with open("dados/cursos.csv", "r", encoding="utf=8") as file:
         linguagem,categoria = line.strip().split(",")
         curso = {}
         cursos += [{"Linguagem":linguagem,"Categoria":categoria}]
-    cursos.pop(0)
+    cursos.pop(0) # Necessário para descartar a linha de título, módulo csv já faz isso automaticamente
 
 ## Ordenação por operações lambda
 # for curso in sorted(cursos, key= lambda x: x["Linguagem"]):
