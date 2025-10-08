@@ -24,3 +24,6 @@ pip install requests
 
 ## API para criar Mocks de teste no python
 pip install unittest2
+
+## API para gerenciar o backend
+pip install flask
