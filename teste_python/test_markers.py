@@ -13,7 +13,7 @@ def funcao_integracao(x):
 # pytest -m "not slow"
 # pytest -m "not unity and not slow"
 
-@pytest.mark.unity
+@pytest.mark.unit
 def teste_unitario():
     assert funcao_unidade(10) == 20
     assert funcao_unidade(3) == 6
@@ -32,7 +32,7 @@ def test_slow_function():
     time.sleep(2)
     assert True
 
-@pytest.mark.unity
+@pytest.mark.unit
 @pytest.mark.integration
 def test_funcao_combinada():
     assert funcao_unidade(1) == 2
