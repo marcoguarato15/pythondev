@@ -9,3 +9,9 @@ names.zip
 
 # conexão com o banco
 conn_post_psycopg.py 
+
+# ambientes virtuais
+.venv
+
+# pytest cache
+.pytest_cache
