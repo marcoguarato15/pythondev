@@ -16,3 +16,11 @@ pip install aiohttp
 
 ## API para manipulação de dados em planilhas com Python
 pip install openpyxl
+
+
+#### Dentro do ambiente virtual .venv criado
+## API para realizar requisições no python
+pip install requests
+
+## API para criar Mocks de teste no python
+pip install unittest2
