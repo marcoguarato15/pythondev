@@ -1,2 +1,11 @@
+!! com o terminal abrindo na pasta do projeto
+
 ## Comando para setar onde o flask irá iniciar a aplicação
 set FLASK_APP="nome_do_arquivo"
+
+## Alterar o tipo de environment para desenvolvimento
+set FLASK_ENV=development
+
+## Rodar a aplicação localmente via terminal
+# OBS: apenas funciona após setar o arquivo inicial no 1º comando citado
+run flask       
