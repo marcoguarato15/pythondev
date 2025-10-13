@@ -2,6 +2,7 @@
 import psycopg2 as ps
 from conn_post_psycopg import conn
 ## Exemplo de conexão com o banco
+# import psycopg2 as ps
 # var = ps.connect(
 #     database = "DB_NAME",
 #     user = "DB_USER",
