@@ -17,10 +17,15 @@
             <li>{{f}}</li>
         {% endfor %}
         <!-- Chama a função da rota no action  com o método desejado -->
-        <form action="{{url_for('principal')}}" method="POST">
-            <label for="fruta"></label>
-            <input type="text" name="fruta" id="fruta">
-            <button>Adicionar</button>
-        </form>
+        <div class="form-group">
+            <form action="{{url_for('principal')}}" method="POST">
+                <div class="mb-3">
+                    <label class="form-label" for="fruta">Fruta</label>
+                    <input class="form-control" type="text" name="fruta" id="fruta" placeholder="Escreva o nome de uma fruta">
+                </div>
+
+                <button class="btn btn-success">Adicionar</button>
+            </form>
+        </div>
      </ol>
 {% endblock conteudo %}

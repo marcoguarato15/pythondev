@@ -1,21 +1,35 @@
 {% extends 'base.html' %}
-{% block counteudo %}
-    <h1>Sobre mim</h1>
-    <hr>
-    {% for r in registros %}
-        <details>
-            <summary>{{r.nome}}</summary>
-            <p>{{r.nota}}</p>
-        </details>
-    {% endfor %}
+{% block conteudo %}
+<h1>Sobre mim</h1>
+<hr>
+{% for r in registros %}
+<p class="d-flex gap-1">
+    <a class="btn btn-primary" data-bs-toggle="collapse" href="#collapse_{{r.nome}}" role="button" aria-expanded="false"
+        aria-controls="collapse_{{r.nome}}">
+        {{r.nome}}
+    </a>
+</p>
+<div class="collapse" id="collapse_{{r.nome}}">
+    <div class="card card-body">
+        {{r.nota}}
+    </div>
+</div>
+{% endfor %}
 
+<div class="form-group">
     <form action="{{url_for('sobre')}}" method="post">
-        <label for="nome">Nome: </label>
-        <input type="text" name="nome" id="nome">
+        <div class="mb-3">
+            <label class="form-label" for="nome">Nome: </label>
+            <input class="form-control" type="text" name="nome" id="nome">
+        </div>
 
-        <label for="nota">Nota: </label>
-        <input type="text" name="nota" id="nota">
+        <div class="mb-3">
+            <label class="form-label" for="nota">Nota: </label>
+            <input class="form-control" type="text" name="nota" id="nota">
+        </div>
 
-        <button>Adicionar</button>
+        <button class="btn btn-success">Adicionar</button>
     </form>
+</div>
+
 {% endblock conteudo %}
