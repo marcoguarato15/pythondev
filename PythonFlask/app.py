@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+import urllib.request, json
 
 app = Flask(__name__)
 
@@ -38,3 +39,16 @@ def sobre():
             registros.append({"nome":request.form.get("nome"), "nota":request.form.get("nota")})
 
     return render_template("about/sobre.html",registros=registros)
+
+'''
+Outras rotas
+'''
+@app.route("/filmes")
+def filmes():
+    url = "https://api.themoviedb.org/3/discover/movie?sort_by=popularity.desc&api_key=8f70c995cc6e1aca07304b3324d1fe2b"
+
+    request = urllib.request.urlopen(url)
+    dados = request.read()
+    jsonData = json.loads(dados)
+
+    return render_template("filmes.html", filmes=jsonData['results'])
