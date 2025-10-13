@@ -27,7 +27,14 @@ def principal():
                             fruta=frutas
                             )
 
-@app.route("/sobre")
+# Inicialização do dicionário para não sobrescrever ao adicionar
+registros = []
+
+@app.route("/sobre", methods=["GET", "POST"])
 def sobre():
-    aluno_nota = {"Fulano":5.0, "Beltrano":6.0, "Aluno":7.0, "Sicrano":8.5}
-    return render_template("about/sobre.html",aluno_nota=aluno_nota)
+    #aluno_nota = {"Fulano":5.0, "Beltrano":6.0, "Aluno":7.0, "Sicrano":8.5}
+    if request.method == "POST":
+        if request.form.get("nome") and request.form.get("nota"):
+            registros.append({"nome":request.form.get("nome"), "nota":request.form.get("nota")})
+
+    return render_template("about/sobre.html",registros=registros)

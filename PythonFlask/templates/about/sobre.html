@@ -8,11 +8,21 @@
 <body>
     <h1>Sobre mim</h1>
     <hr>
-    
-    <ul>
-        {% for aluno, nota in aluno_nota.items() %}
-            <li>{{aluno}}|{{nota}}</li>
-        {% endfor %}
-    </ul>
+    {% for r in registros %}
+        <details>
+            <summary>{{r.nome}}</summary>
+            <p>{{r.nota}}</p>
+        </details>
+    {% endfor %}
+
+    <form action="{{url_for('sobre')}}" method="post">
+        <label for="nome">Nome: </label>
+        <input type="text" name="nome" id="nome">
+
+        <label for="nota">Nota: </label>
+        <input type="text" name="nota" id="nota">
+
+        <button>Adicionar</button>
+    </form>
 </body>
 </html>
