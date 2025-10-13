@@ -8,5 +8,11 @@
 <body>
     <h1>Sobre mim</h1>
     <hr>
+    
+    <ul>
+        {% for aluno, nota in aluno_nota.items() %}
+            <li>{{aluno}}|{{nota}}</li>
+        {% endfor %}
+    </ul>
 </body>
 </html>
