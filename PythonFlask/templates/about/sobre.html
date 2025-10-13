@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre</title>
-</head>
-<body>
+{% extends 'base.html' %}
+{% block counteudo %}
     <h1>Sobre mim</h1>
     <hr>
     {% for r in registros %}
@@ -24,5 +18,4 @@
 
         <button>Adicionar</button>
     </form>
-</body>
-</html>
+{% endblock conteudo %}

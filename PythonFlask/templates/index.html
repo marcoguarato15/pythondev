@@ -1,11 +1,5 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Inicial</title>
-</head>
-<body>
+{% extends 'base.html'  %}
+{% block conteudo %}
     <h1>Hello World</h1>
     <hr>
     {{nome}} tem {{idade}}
@@ -29,5 +23,4 @@
             <button>Adicionar</button>
         </form>
      </ol>
-</body>
-</html>
+{% endblock conteudo %}
