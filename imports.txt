@@ -27,3 +27,6 @@ pip install unittest2
 
 ## API para gerenciar o backend
 pip install flask
+
+## API para usar o SQLAlchemy com o flask
+pip install -U Flask-SQLAlchemy
