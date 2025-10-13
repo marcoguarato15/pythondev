@@ -8,5 +8,26 @@
 <body>
     <h1>Hello World</h1>
     <hr>
+    {{nome}} tem {{idade}}
+    <br>
+    <h3 style="font-weight: bold;">frutas</h3>
+     <ol>
+         <li>{{fruta1}}</li>
+         <li>{{fruta2}}</li>
+         <li>{{fruta3}}</li>
+         <li>{{fruta4}}</li>
+     </ol>
+     <h3 style="font-weight: bold;">frutas (for)</h3>
+     <ol>
+        {% for f in fruta %}
+            <li>{{f}}</li>
+        {% endfor %}
+        <!-- Chama a função da rota no action  com o método desejado -->
+        <form action="{{url_for('principal')}}" method="POST">
+            <label for="fruta"></label>
+            <input type="text" name="fruta" id="fruta">
+            <button>Adicionar</button>
+        </form>
+     </ol>
 </body>
 </html>
