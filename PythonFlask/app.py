@@ -88,9 +88,9 @@ def filmes(propriedade):
 
     return render_template("filmes.html", filmes=jsonData['results'])
 
-
-@app.route("/cursos/<propriedade>", methods=["GET","POST"])
-def cursos(propriedade):
+@app.route("/cursos/<propriedade>", methods=["GET","POST"], endpoint="cursos")
+@app.route("/cursos/<propriedade>/<int:id>", methods=["GET","POST"], endpoint="cursos")
+def cursos(propriedade, id=None):
     if propriedade == "lista_cursos":
         return render_template('lista_cursos.html', cursos=Curso.query.all())
     
@@ -115,4 +115,20 @@ def cursos(propriedade):
                 flash("Informe todos os campos do formulario.", "error")
         return render_template("create_cursos.html", msg=msg)   #', msg=msg' para mensagens de tela, verificando no Jinja e funcionando 
                                                                 # com JS futuramente ver  se isto funciona
+    elif propriedade == "alter_cursos":
+        print("Entrou no alter cursos")
+        if id is None:
+            print("ID veio como None, PROBLEMA")
+            ## flash message para erro de fornecimento de id
+            pass
+        else:
+            print("Passou o id para alter cursos")
+            curso = Curso.query.get(id)
+            if curso:
+                print("Achou o curso com id e enviou para alter cursos")
+                return render_template("alter_cursos.html", curso=curso)
+            else:
+                print("Não achou o ID no banco, PROBLEMA")
+                ## flash message para erro de passagem de id
+                pass
 
