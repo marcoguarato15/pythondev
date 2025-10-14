@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for
+from flask import Flask, render_template, request, redirect, url_for, flash
 import urllib.request, json
 from flask_sqlalchemy import SQLAlchemy
 
@@ -59,6 +59,7 @@ def sobre():
     if request.method == "POST":
         if request.form.get("nome") and request.form.get("nota"):
             registros.append({"nome":request.form.get("nome"), "nota":request.form.get("nota")})
+        
 
     return render_template("about/sobre.html",registros=registros)
 
@@ -103,10 +104,12 @@ def cursos(propriedade):
                         session.commit()
                         print("Comitado")
                     msg = 1
-                    return redirect(url_for('cursos', propriedade='lista_cursos'))
+                    flash("Curso Adicionado com Sucesso.","success")
                 except Exception as e:
                     print("Erro ao adicionar curso:", e)
                     db.session.rollback()
+            else:
+                flash("Informe todos os campos do formulario.", "error")
         return render_template("create_cursos.html", msg=msg)   #', msg=msg' para mensagens de tela, verificando no Jinja e funcionando 
                                                                 # com JS futuramente ver  se isto funciona
 
