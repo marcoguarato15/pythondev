@@ -9,6 +9,7 @@
             <th>Nome</th>
             <th>Descrição</th>
             <th>Carga Horária</th>
+            <th>Ações</th>
         </tr>
     </thead>
     <tbody>
@@ -18,6 +19,10 @@
             <td>{{curso.nome}}</td>
             <td>{{curso.descricao}}</td>
             <td>{{curso.carga_horaria}}</td>
+            <td>
+                <a href="{{url_for('cursos', propriedade='alter_cursos', id=curso.id)}}" class="btn btn-warning btn-xs">Editar</a>
+                <a href="{{url_for('cursos', propriedade='delete_cursos', id=curso.id)}}" class="btn btn-danger btn-xs">Excluir</a>
+            </td>
         </tr>
         {% endfor %}
     </tbody>
