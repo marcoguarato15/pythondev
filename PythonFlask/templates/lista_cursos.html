@@ -1,6 +1,7 @@
 {% extends 'base.html' %}
 {% block conteudo %}
 <h2>Listagem de Cursos</h2>
+<a href="{{url_for('cursos', propriedade='create_cursos')}}" class="btn btn-primary">Criar Cursos</a>
 <table class="table table-hover table-striped">
     <thead class="table-dark">
         <tr>

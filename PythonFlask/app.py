@@ -4,6 +4,9 @@ from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
+## Utilizar uma chave segura com um .env, mas como é um app de aprendizado não farei isto
+app.secret_key = "apenas_uma_chave"
+
 # Cria a configuração de url do Banco de Dados e chama a instancia do banco passando o Flask(app criado na linha 5)
 # No código with app.app_context():... cria as tabelas e o banco
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cursos.sqlite3'
@@ -95,7 +98,7 @@ def cursos(propriedade):
         msg = None
         if request.method == "POST":
             print("Método post")
-            if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")) and (carga_horaria := request.form.get("carga_horaria")):
+            if (nome := request.form.get("nome").strip()) and (descricao := request.form.get("descricao").strip()) and (carga_horaria := request.form.get("carga_horaria").strip()):
                 print("com campos ok")
                 try:
                     curso = Curso(nome, descricao, carga_horaria)
@@ -106,7 +109,7 @@ def cursos(propriedade):
                     msg = 1
                     flash("Curso Adicionado com Sucesso.","success")
                 except Exception as e:
-                    print("Erro ao adicionar curso:", e)
+                    flash("Erro ao adicionar curso.", "error")
                     db.session.rollback()
             else:
                 flash("Informe todos os campos do formulario.", "error")

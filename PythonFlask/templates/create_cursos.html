@@ -2,18 +2,25 @@
 {% block conteudo %}
 <h2>Criação de Cursos</h2>
 <hr>
+{%- for category,msg in get_flashed_messages(with_categories=true) %}
+    {% if category == 'success' %}
+        <div class="alert alert-success">{{msg}}</div>
+    {% elif category == 'error' %}
+        <div class="alert alert-danger">{{msg}}</div>
+    {% endif %}
+{%- endfor %}
 <form action="{{url_for('cursos', propriedade='create_cursos')}}" method="POST" class="form-group">
     <div>
         <label for="nome" class="form-label">Nome:</label>
-        <input type="text" class="form-control" name="nome" id="nome" minlength="5" maxlength="50" required>
+        <input type="text" class="form-control" name="nome" id="nome"  required>
     </div>
     <div>
         <label for="descricao" class="form-label">Descrição:</label>
-        <input type="text" class="form-control" name="descricao" id="descricao" minlength="5" maxlength="100" required>
+        <input type="text" class="form-control" name="descricao" id="descricao" >
     </div>
     <div>
         <label for="carga_horaria" class="form-label">Carga Horária:</label>
-        <input type="number" class="form-control" name="carga_horaria" id="carga_horaria" min="0" max="40" required>
+        <input type="number" class="form-control" name="carga_horaria" id="carga_horaria" required>
     </div>
     <button class="btn btn-success">Adicionar</button>
 </form>
