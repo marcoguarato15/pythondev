@@ -1,7 +1,23 @@
 from flask import Flask, render_template, request
 import urllib.request, json
+from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
+
+# Caso seja iniciado com python app.py é necessário ficar neste local pois
+# ele configura o banco após inicializar o app para que não tenha uma importação circular (resolvida com uma fábrica de aplicativos)
+if __name__ == "__main__":
+    app.run()
+
+# Cria a configuração de url do Banco de Dados e chama a instancia do banco passando o Flask(app criado na linha 5)
+# No código with app.app_context():... cria as tabelas e o banco
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cursos.sqlite3'
+db = SQLAlchemy(app)
+
+# Importação das classes, Fazer uma fábrica de aplicativos para funcionar corretamente
+# sem ser necessário importar após a criação da variável db (antes da erro de importação circular)
+from Model.Cursos import Cursos
+
 
 # Inicialização com escopo global para não resetar a lista sempre que executar a função principal
 frutas = []
@@ -61,3 +77,8 @@ def filmes(propriedade):
     jsonData = json.loads(dados)
 
     return render_template("filmes.html", filmes=jsonData['results'])
+
+## Cria o banco e as tabelas se não existirem
+with app.app_context():
+    db.create_all()
+
