@@ -1,6 +1,6 @@
 from app import db
 
-class Cursos(db.Model):
+class Curso(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     nome = db.Column(db.String(50))
     descricao = db.Column(db.String(100))

@@ -1,23 +1,29 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, redirect, url_for
 import urllib.request, json
 from flask_sqlalchemy import SQLAlchemy
 
 app = Flask(__name__)
 
-# Caso seja iniciado com python app.py é necessário ficar neste local pois
-# ele configura o banco após inicializar o app para que não tenha uma importação circular (resolvida com uma fábrica de aplicativos)
-if __name__ == "__main__":
-    app.run()
-
 # Cria a configuração de url do Banco de Dados e chama a instancia do banco passando o Flask(app criado na linha 5)
 # No código with app.app_context():... cria as tabelas e o banco
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///cursos.sqlite3'
+
+print("URL db:",app.config['SQLALCHEMY_DATABASE_URI'])
+
 db = SQLAlchemy(app)
 
 # Importação das classes, Fazer uma fábrica de aplicativos para funcionar corretamente
 # sem ser necessário importar após a criação da variável db (antes da erro de importação circular)
-from Model.Cursos import Cursos
+from Model.Cursos import Curso
 
+## Cria o banco e as tabelas se não existirem
+with app.app_context():
+    db.create_all()
+
+# Caso seja iniciado com python app.py é necessário ficar neste local pois
+# ele configura o banco após inicializar o app para que não tenha uma importação circular (resolvida com uma fábrica de aplicativos)
+if __name__ == "__main__":
+    app.run()
 
 # Inicialização com escopo global para não resetar a lista sempre que executar a função principal
 frutas = []
@@ -78,7 +84,29 @@ def filmes(propriedade):
 
     return render_template("filmes.html", filmes=jsonData['results'])
 
-## Cria o banco e as tabelas se não existirem
-with app.app_context():
-    db.create_all()
+
+@app.route("/cursos/<propriedade>", methods=["GET","POST"])
+def cursos(propriedade):
+    if propriedade == "lista_cursos":
+        return render_template('lista_cursos.html', cursos=Curso.query.all())
+    
+    elif propriedade == "create_cursos":
+        msg = None
+        if request.method == "POST":
+            print("Método post")
+            if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")) and (carga_horaria := request.form.get("carga_horaria")):
+                print("com campos ok")
+                try:
+                    curso = Curso(nome, descricao, carga_horaria)
+                    with (session := db.session()):
+                        session.add(curso)
+                        session.commit()
+                        print("Comitado")
+                    msg = 1
+                    return redirect(url_for('cursos', propriedade='lista_cursos'))
+                except Exception as e:
+                    print("Erro ao adicionar curso:", e)
+                    db.session.rollback()
+        return render_template("create_cursos.html", msg=msg)   #', msg=msg' para mensagens de tela, verificando no Jinja e funcionando 
+                                                                # com JS futuramente ver  se isto funciona
 
