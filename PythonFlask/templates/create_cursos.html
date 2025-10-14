@@ -12,15 +12,15 @@
 <form action="{{url_for('cursos', propriedade='create_cursos')}}" method="POST" class="form-group">
     <div>
         <label for="nome" class="form-label">Nome:</label>
-        <input type="text" class="form-control" name="nome" id="nome"  required>
+        <input type="text" class="form-control" name="nome" id="nome" minlength="3" maxlength="50" required>
     </div>
     <div>
         <label for="descricao" class="form-label">Descrição:</label>
-        <input type="text" class="form-control" name="descricao" id="descricao" >
+        <input type="text" class="form-control" name="descricao" id="descricao" minlength="5" maxlength="100" required>
     </div>
     <div>
         <label for="carga_horaria" class="form-label">Carga Horária:</label>
-        <input type="number" class="form-control" name="carga_horaria" id="carga_horaria" required>
+        <input type="number" class="form-control" name="carga_horaria" id="carga_horaria" min="0" max="1000" required>
     </div>
     <button class="btn btn-success">Adicionar</button>
 </form>
