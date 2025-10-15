@@ -15,3 +15,6 @@ conn_post_psycopg.py
 
 # pytest cache
 .pytest_cache
+
+# Banco de dados do pythondev
+cursos.sqlite3

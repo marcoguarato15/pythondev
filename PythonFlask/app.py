@@ -138,11 +138,27 @@ def cursos(propriedade, id=None):
                     flash("Sucesso ao alterar Curso","success")
                     return redirect(url_for("cursos",propriedade="lista_cursos"))
                 
-                return render_template("alter_cursos.html",id=curso.id,curso=curso)
+                return render_template("alter_cursos.html")
             else:
                 print("Não achou o ID no banco, PROBLEMA")
                 flash("Falha ao acessar id no banco","error")
                 return redirect(url_for("cursos",propriedade="lista_cursos"))
     elif propriedade == "delete_cursos":
-        pass
+        if id == None:
+            flash("Falha ao pegar ip", "error")
+            return redirect(url_for("curso",propriedade="lista_cursos"))
+        elif id:
+            curso = Curso.query.filter_by(id=id).first()
+            try:
+                
+                db.session.delete(curso)
+                db.session.commit()
+                flash("Curso excluído com sucesso","success")
+            except Exception as e:
+                flash(f"Falha ao excluir,erro: {e}","error")
+            return redirect(url_for("cursos",propriedade="lista_cursos"))
+        else:
+            flash("Falha geral","error")
+            return redirect("cursos",propriedade="lista_cursos")
+            
 

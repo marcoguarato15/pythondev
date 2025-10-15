@@ -21,7 +21,7 @@
             <td>{{curso.carga_horaria}}</td>
             <td>
                 <a href="{{url_for('cursos', propriedade='alter_cursos', id=curso.id)}}" class="btn btn-warning btn-xs">Editar</a>
-                <a href="{{url_for('cursos', propriedade='delete_cursos', id=curso.id)}}" class="btn btn-danger btn-xs">Excluir</a>
+                <a href="{{url_for('cursos', propriedade='delete_cursos', id=curso.id)}}" onclick="return confirm('Deseja excluir o Curso?')" class="btn btn-danger btn-xs">Excluir</a>
             </td>
         </tr>
         {% endfor %}
