@@ -2,14 +2,14 @@
 {% block conteudo %}
 <h2>Listagem de Cursos</h2>
 <a href="{{url_for('cursos', propriedade='create_cursos')}}" class="btn btn-primary">Criar Cursos</a>
-<table class="table table-hover table-striped">
+<table class="table table-hover table-striped table-responsive">
     <thead class="table-dark">
         <tr>
-            <th>Id</th>
-            <th>Nome</th>
-            <th>Descrição</th>
-            <th>Carga Horária</th>
-            <th>Ações</th>
+            <th scope="col">Id</th>
+            <th scope="col">Nome</th>
+            <th scope="col">Descrição</th>
+            <th scope="col">Carga Horária</th>
+            <th scope="col">Ações</th>
         </tr>
     </thead>
     <tbody>

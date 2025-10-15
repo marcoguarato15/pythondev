@@ -119,16 +119,30 @@ def cursos(propriedade, id=None):
         print("Entrou no alter cursos")
         if id is None:
             print("ID veio como None, PROBLEMA")
-            ## flash message para erro de fornecimento de id
-            pass
+            flash("Falha ao acessar id","error")
+            return redirect(url_for("cursos",propriedade="lista_cursos"))
+
         else:
             print("Passou o id para alter cursos")
             curso = Curso.query.get(id)
             if curso:
-                print("Achou o curso com id e enviou para alter cursos")
-                return render_template("alter_cursos.html", curso=curso)
+                if request.method == "POST":
+                    print("Entrou no post alter_cursos")
+                    nome = request.form.get("nome")
+                    descricao = request.form.get("descricao")
+                    carga_horaria = request.form.get("carga_horaria")
+
+                    Curso.query.filter_by(id=id).update({"nome":nome, "descricao":descricao, "carga_horaria":carga_horaria})
+                    
+                    db.session.commit()
+                    flash("Sucesso ao alterar Curso","success")
+                    return redirect(url_for("cursos",propriedade="lista_cursos"))
+                
+                return render_template("alter_cursos.html",id=curso.id,curso=curso)
             else:
                 print("Não achou o ID no banco, PROBLEMA")
-                ## flash message para erro de passagem de id
-                pass
+                flash("Falha ao acessar id no banco","error")
+                return redirect(url_for("cursos",propriedade="lista_cursos"))
+    elif propriedade == "delete_cursos":
+        pass
 

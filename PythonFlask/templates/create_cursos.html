@@ -2,13 +2,6 @@
 {% block conteudo %}
 <h2>Criação de Cursos</h2>
 <hr>
-{%- for category,msg in get_flashed_messages(with_categories=true) %}
-    {% if category == 'success' %}
-        <div class="alert alert-success">{{msg}}</div>
-    {% elif category == 'error' %}
-        <div class="alert alert-danger">{{msg}}</div>
-    {% endif %}
-{%- endfor %}
 <form action="{{url_for('cursos', propriedade='create_cursos')}}" method="POST" class="form-group">
     <div>
         <label for="nome" class="form-label">Nome:</label>
