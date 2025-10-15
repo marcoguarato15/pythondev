@@ -92,7 +92,10 @@ def filmes(propriedade):
 @app.route("/cursos/<propriedade>/<int:id>", methods=["GET","POST"], endpoint="cursos")
 def cursos(propriedade, id=None):
     if propriedade == "lista_cursos":
-        return render_template('lista_cursos.html', cursos=Curso.query.all())
+        page = request.args.get("page", 1, type=int)
+        per_page = 10
+        cursos = Curso.query.paginate(page=page, per_page=per_page)
+        return render_template('lista_cursos.html', cursos=cursos)
     
     elif propriedade == "create_cursos":
         msg = None
