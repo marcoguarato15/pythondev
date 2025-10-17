@@ -20,7 +20,16 @@
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link active" href="{{url_for('index')}}">Cursos</a>
+                        <a class="nav-link active" href="{{url_for('add_curso')}}">Adiciona Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url_for('cursos')}}">Lista Cursos</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url_for('curso_id',id=1)}}">Curso id</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="{{url_for('del_curso', id=1)}}">deletar curso</a>
                     </li>
                 </ul>
             </div>

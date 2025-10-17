@@ -47,5 +47,5 @@ class CursoDetail(Resource):
     def delete(self, id):
         pass
 
-api.add_resource(CursoList, '/cursos')
-api.add_resource(CursoDetail, '/cursos/<int:id>')
+api.add_resource(CursoList, '/api/cursos')
+api.add_resource(CursoDetail, '/api/cursos/<int:id>')
