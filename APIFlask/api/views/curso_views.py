@@ -7,7 +7,11 @@ from flask import request, make_response, jsonify
 
 class CursoList(Resource):
     def get(self):
-        return "Olá mundo!"
+        cursos = curso_service.listar_cursos()
+        cursoSchema = curso_schema.CursoSchema(many=True)
+        return make_response(cursoSchema.dump(cursos), 200)
+    
+
     def post(self):
         # Cria o schema de validação de dados
         cursoSchema = curso_schema.CursoSchema()
@@ -19,13 +23,29 @@ class CursoList(Resource):
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
-            data_criacao = request.json["data_criacao"]
 
             # Chama a entidade de Curso
-            novo_curso = curso.Curso(nome=nome, descricao=descricao, data_criacao=data_criacao)
+            novo_curso = curso.Curso(nome=nome, descricao=descricao)
 
             resultado = curso_service.cadastrar_curso(curso=novo_curso)
             res_criacao = cursoSchema.jsonify(resultado)
             return make_response(res_criacao, 201)
 
+class CursoDetail(Resource):
+    def get(self, id):
+        curso = curso_service.listar_curso_id(id)
+        
+        if curso is None:
+            return make_response("Curso não encontrado", 484)
+        
+        cursoSchema = curso_schema.CursoSchema()
+        return make_response(cursoSchema.dump(curso), 200)
+
+    def put(self, id, nome, descricao):
+        pass
+
+    def delete(self, id):
+        pass
+
 api.add_resource(CursoList, '/cursos')
+api.add_resource(CursoDetail, '/cursos/<int:id>')
