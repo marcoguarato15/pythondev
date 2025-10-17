@@ -18,3 +18,6 @@ conn_post_psycopg.py
 
 # Banco de dados do pythondev
 cursos.sqlite3
+
+## Configurações privadas do Projeto APIFlash
+config.py
