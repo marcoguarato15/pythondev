@@ -1,0 +1,11 @@
+# Inicializa a migration do Banco de dados para gerenciar as atualizações
+flask db init
+
+# Faz o reconhecimento das atualizações e gera as migrações automaticamente
+flask db migrate
+
+# Executa as migrations fazendo as alterações no banco de dados 
+flask db upgrade
+
+# Realiza um rollback automatico revertendo as alterações realizadas na migration anterior
+flask db downgrade

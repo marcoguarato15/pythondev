@@ -1,4 +1,14 @@
 DEBUG = True
 
+# Dados da conexão com o banco
 USERNAME = ''
+# Se tiver @ na senha é necessario fazer r'senha%40' em vez de 'senha@'
 PASSWORD = ''
+SERVER = 'localhost'
+DB = 'api_flask'
+
+# URI de conexão com o banco
+SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{SERVER}/{DB}'
+
+# Para utilizar o migration
+SQLALCHEMY_TRACK_MODIFICATIONS = True
