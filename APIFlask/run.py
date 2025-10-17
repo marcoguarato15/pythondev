@@ -35,5 +35,30 @@ def add_curso():
                     flash("Falha ao cadastrar curso","error")
     return render_template("add_curso.html")
 
+@app.route("/put_curso/<int:id>", methods=["GET", "POST"])
+def put_curso(id):
+    schema = CursoSchema()
+    if request.method == "POST":
+        if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
+            validate = schema.validate(request.form)
+            if validate:
+                flash(f"Preencha os campos corretamente \n{validate}", "error")
+            else:
+                curso = curso_service.alterar_curso(id, nome, descricao)
+                if curso:
+                    flash("Curso alterado com sucesso","success")
+                else:
+                    flash("Falha em alterar o curso","error")
+        else:
+            flash("Preencha os campos corretamente","error")
+
+    curso = curso_service.listar_curso_id(id)
+
+    return render_template('put_curso.html', curso=schema.dump(curso))
+
+@app.route("/del_curso/<int:id>", methods=["GET", "POST"])
+def del_curso(id):
+    pass
+
 if __name__ == "__main__":
     app.run()

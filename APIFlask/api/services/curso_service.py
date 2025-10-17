@@ -16,3 +16,8 @@ def listar_cursos():
 def listar_curso_id(id):
     curso = curso_model.Curso.query.filter_by(id=id).first()
     return curso
+
+def alterar_curso(id, nome, descricao):
+    curso = curso_model.Curso.query.filter_by(id=id).update({"nome":nome, "descricao":descricao})
+    db.session.commit()
+    return curso

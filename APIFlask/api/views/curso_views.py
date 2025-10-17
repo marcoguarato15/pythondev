@@ -28,8 +28,7 @@ class CursoList(Resource):
             novo_curso = curso.Curso(nome=nome, descricao=descricao)
 
             resultado = curso_service.cadastrar_curso(curso=novo_curso)
-            res_criacao = cursoSchema.jsonify(resultado)
-            return make_response(res_criacao, 201)
+            return make_response(resultado, 201)
 
 class CursoDetail(Resource):
     def get(self, id):
@@ -41,8 +40,23 @@ class CursoDetail(Resource):
         cursoSchema = curso_schema.CursoSchema()
         return make_response(cursoSchema.dump(curso), 200)
 
-    def put(self, id, nome, descricao):
-        pass
+    def put(self, id):
+        curso_bd = curso_service.listar_curso_id(id)
+        if curso_bd is None:
+            return make_response("Curso não foi encontrado", 484)
+        cursoSchema = curso_schema.CursoSchema()
+        validate = cursoSchema.validate(request.json)
+        if validate:
+            return make_response(f"{validate}", 400)
+        else:
+            nome = request.json['nome']
+            descricao = request.json['descricao']
+
+            resposta = curso_service.alterar_curso(id, nome, descricao)
+            if resposta is not None:
+                curso = curso_service.listar_curso_id(id)
+            return make_response(cursoSchema.dump(curso), 200)
+
 
     def delete(self, id):
         pass
