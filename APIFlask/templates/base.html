@@ -28,14 +28,17 @@
                     <li class="nav-item">
                         <a class="nav-link active" href="{{url_for('curso_id',id=1)}}">Curso id</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link active" href="{{url_for('del_curso', id=1)}}">deletar curso</a>
-                    </li>
                 </ul>
             </div>
         </div>
     </nav>
-
+        {% for category,msg in get_flashed_messages(with_categories=true) %}
+            {% if category == 'success' %}
+                <div class="alert alert-success">{{msg}}</div>
+            {% elif category == 'error' %}
+                <div class="alert alert-danger">{{msg}}</div>
+            {% endif %}
+        {% endfor %}
     <div class="container">
         {% block conteudo %}
         {% endblock conteudo %}

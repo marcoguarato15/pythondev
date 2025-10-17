@@ -7,6 +7,7 @@ import os
 
 app = Flask(__name__,  template_folder=os.path.join(os.path.dirname(__file__), '..', 'templates'))
 app.config.from_object('config')
+app.secret_key = '123'
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)

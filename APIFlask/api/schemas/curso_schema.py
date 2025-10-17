@@ -10,6 +10,4 @@ class CursoSchema(ma.SQLAlchemyAutoSchema):
 
     nome = fields.String(required=True)
     descricao = fields.String(required=True)
-
-    
-    
+    data_criacao = fields.Date(dump_only=True)
