@@ -28,7 +28,8 @@ class CursoList(Resource):
             novo_curso = curso.Curso(nome=nome, descricao=descricao)
 
             resultado = curso_service.cadastrar_curso(curso=novo_curso)
-            return make_response(resultado, 201)
+
+            return make_response(cursoSchema.dump(resultado), 201)
 
 class CursoDetail(Resource):
     def get(self, id):
@@ -59,7 +60,12 @@ class CursoDetail(Resource):
 
 
     def delete(self, id):
-        pass
+        resposta = curso_service.delete_curso(id)
+        print(resposta)
+        if resposta == '-1' or resposta == -1:
+            return make_response("Falha ao excluir dado",400)
+        else:
+            return make_response("Sucesso ao excluir o curso", 200)
 
 api.add_resource(CursoList, '/api/cursos')
 api.add_resource(CursoDetail, '/api/cursos/<int:id>')

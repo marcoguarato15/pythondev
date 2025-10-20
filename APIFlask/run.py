@@ -1,5 +1,5 @@
 from api import app
-from flask import render_template, request, flash
+from flask import render_template, request, flash, redirect, url_for
 from api.views.curso_views import CursoList
 from api.schemas.curso_schema import CursoSchema
 from api.services import curso_service
@@ -15,9 +15,12 @@ def cursos():
 @app.route("/cursos/<int:id>")
 def curso_id(id):
     curso = curso_service.listar_curso_id(id)
-    schema = CursoSchema()
-    curso_serializado = schema.dump(curso)
-    return render_template("lista.html", cursos=[curso_serializado])
+    if curso:
+        schema = CursoSchema()
+        curso_serializado = schema.dump(curso)
+        return render_template("lista.html", cursos=[curso_serializado])
+    else:
+        return render_template("lista.html", cursos=None)
 
 @app.route("/add_curso", methods=["GET","POST"])
 def add_curso():
@@ -58,7 +61,13 @@ def put_curso(id):
 
 @app.route("/del_curso/<int:id>", methods=["GET", "POST"])
 def del_curso(id):
-    pass
+    resposta = curso_service.delete_curso(id)
+    if resposta == -1:
+        flash("Falha ao excluir curso","error")
+    else:
+        flash("Sucesso ao excluir curso","success")
+
+    return redirect(url_for("cursos"))
 
 if __name__ == "__main__":
     app.run()

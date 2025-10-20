@@ -21,3 +21,12 @@ def alterar_curso(id, nome, descricao):
     curso = curso_model.Curso.query.filter_by(id=id).update({"nome":nome, "descricao":descricao})
     db.session.commit()
     return curso
+
+def delete_curso(id):
+    curso = curso_model.Curso.query.filter_by(id=id).delete()
+    if curso == 1:
+        db.session.commit()
+        return curso
+    else:
+        return -1
+    
