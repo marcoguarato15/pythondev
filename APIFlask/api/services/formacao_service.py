@@ -18,7 +18,9 @@ def listar_formacao_id(id):
     return formacao
 
 def alterar_formacao(id, nome, descricao):
-    formacao = formacao_model.Formacao.query.filter_by(id=id).update({"nome":nome, "descricao":descricao})
+    formacao = formacao_model.Formacao.query.get(id)
+    formacao.nome = nome
+    formacao.descricao = descricao
     db.session.commit()
     return formacao
 

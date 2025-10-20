@@ -82,5 +82,62 @@ def del_curso(id):
 
     return redirect(url_for("cursos"))
 
+@app.route("/formacoes")
+def formacoes():
+    formacoes = formacao_service.listar_formacoes()
+    f_schema = FormacaoSchema(many=True)
+    formacoes_serializadas = f_schema.dump(formacoes)
+
+    return render_template("lista_formacoes.html", formacoes=formacoes_serializadas)
+
+@app.route("/add_formacao", methods=["GET","POST"])
+def add_formacao():
+    if request.method == "POST":
+        if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
+            nome_formacao = nome
+            desc_formacao = descricao
+            formacaoSchema = FormacaoSchema()
+            validate = formacaoSchema.validate(request.form)
+            if validate:
+                flash(f"Informe os campos: {validate}","error")
+            else:
+                formacao = formacao_service.cadastrar_formacao(Formacao(nome_formacao, desc_formacao))
+                if formacao:
+                    flash("Sucesso ao adicionar formação","success")
+                else:
+                    flash("Falha ao adicionar Formação","error")
+        else:
+            flash("Preencha os campos corretamente","error")
+
+    return render_template("add_formacao.html")
+
+@app.route("/put_formacao/<int:id>",methods=["GET","POST"])
+def put_formacao(id):
+    formacao = formacao_service.listar_formacao_id(id)
+    if formacao is None:
+        flash("Falha ao solicitar formação", "error")
+        return redirect(url_for("formacoes"))
+    else:
+        if request.method == "POST":
+            if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
+                formacao_schema = FormacaoSchema()
+                validate = formacao_schema.validate(request.form) 
+                if validate:
+                    flash("preencha os dados corretamente","error")
+                else:
+                    formacao = formacao_service.alterar_formacao(id,nome,descricao)
+                    flash("Sucesso ao alterar formação","success")
+    return render_template("put_formacao.html", formacao=formacao)
+
+@app.route("/del_formacao/<int:id>")
+def del_formacao(id):
+    formacao = formacao_service.listar_formacao_id(id)
+    if formacao:
+        formacao = formacao_service.delete_formacao(id)
+        flash("Sucesso ao excluir formação","success")
+    else:
+        flash("Falha ao detectar formação","error")
+    return redirect(url_for('formacoes'))
+
 if __name__ == "__main__":
     app.run()
