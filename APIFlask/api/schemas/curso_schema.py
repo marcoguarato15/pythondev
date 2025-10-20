@@ -6,10 +6,10 @@ class CursoSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = curso_model.Curso
         _load_instance = True
-        fields = ("id", "nome", "descricao","data_criacao", "formacao")
+        fields = ("id", "nome", "descricao","data_criacao", "formacao_id")
 
     nome = fields.String(required=True)
     descricao = fields.String(required=True)
     data_criacao = fields.Date(dump_only=True)
-    formacao = fields.Integer(required=True)
+    formacao_id = fields.Integer(required=True)
     

@@ -11,6 +11,19 @@
     <label for="descricao" class="form-label">Descrição:</label>
     <input type="text" class="form-control" value="{{curso.descricao}}" name="descricao" id="descricao">
 </div>
+<div>
+    <label class="form-label" for="formacao_id">Formação</label>
+    <select class="form-select" name="formacao_id" id="formacao_id">
+        <option value="" disabled>Formações</option>
+        {% for formacao in formacoes %}
+            {% if curso.formacao_id == formacao.id %}
+                <option value="{{formacao.id}}" selected>{{formacao.nome}}</option>
+            {% else %}
+                <option value="{{formacao.id}}">{{formacao.nome}}</option>
+            {% endif %}
+        {% endfor %}
+    </select>
+</div>
 <button class="btn btn-success">Editar</button>
 </form>
 {% endblock conteudo %}

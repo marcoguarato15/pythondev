@@ -1,9 +1,10 @@
 from api import app
 from flask import render_template, request, flash, redirect, url_for
-from api.views.curso_views import CursoList
 from api.schemas.curso_schema import CursoSchema
-from api.services import curso_service
+from api.schemas.formacao_schema import FormacaoSchema
+from api.services import curso_service, formacao_service
 from api.entidades.curso import Curso
+from api.entidades.formacao import Formacao
 
 @app.route("/cursos")
 def cursos():
@@ -24,23 +25,31 @@ def curso_id(id):
 
 @app.route("/add_curso", methods=["GET","POST"])
 def add_curso():
+    formacoes = formacao_service.listar_formacoes()
+    print(formacoes)
     if request.method == "POST":
-        if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
+        if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")) and (formacao_id := request.form.get("formacao_id")):
             schema = CursoSchema()
             validate = schema.validate(request.form)
+            print(validate)
             if validate:
                 flash(f"Preencha os campos: {validate}", "error")
             else:
-                curso = curso_service.cadastrar_curso(Curso(nome, descricao))
+                print(nome, descricao, formacao_id)
+                curso = curso_service.cadastrar_curso(Curso(nome=nome, descricao=descricao, formacao_id=formacao_id))
                 if curso:
                     flash("Curso cadastrado com sucesso","success")
                 else:
                     flash("Falha ao cadastrar curso","error")
-    return render_template("add_curso.html")
+        else:
+            flash("Preencha todos os campos","error")
+
+    return render_template("add_curso.html", formacoes=formacoes)
 
 @app.route("/put_curso/<int:id>", methods=["GET", "POST"])
 def put_curso(id):
     schema = CursoSchema()
+    formacoes = formacao_service.listar_formacoes()
     if request.method == "POST":
         if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
             validate = schema.validate(request.form)
@@ -57,7 +66,7 @@ def put_curso(id):
 
     curso = curso_service.listar_curso_id(id)
 
-    return render_template('put_curso.html', curso=schema.dump(curso))
+    return render_template('put_curso.html', curso=schema.dump(curso), formacoes=formacoes)
 
 @app.route("/del_curso/<int:id>", methods=["GET", "POST"])
 def del_curso(id):

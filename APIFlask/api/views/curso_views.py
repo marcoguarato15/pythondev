@@ -23,7 +23,7 @@ class CursoList(Resource):
         else:
             nome = request.json["nome"]
             descricao = request.json["descricao"]
-            formacao = request.json["formacao"]
+            formacao = request.json["formacao_id"]
 
             formacao_curso = formacao_service.listar_formacao_id(formacao)
 
@@ -31,7 +31,7 @@ class CursoList(Resource):
                 return make_response(jsonify("Formação não foi encontrada"), 404)
 
             # Chama a entidade de Curso
-            novo_curso = curso.Curso(nome=nome, descricao=descricao, formacao=formacao_curso)
+            novo_curso = curso.Curso(nome=nome, descricao=descricao, formacao=formacao)
 
             resultado = curso_service.cadastrar_curso(curso=novo_curso)
 
@@ -48,28 +48,31 @@ class CursoDetail(Resource):
         return make_response(cursoSchema.dump(curso), 200)
 
     def put(self, id):
-        curso_bd = curso_service.listar_curso_id(id)
-        if curso_bd is None:
-            return make_response("Curso não foi encontrado", 484)
-        cursoSchema = curso_schema.CursoSchema()
-        validate = cursoSchema.validate(request.json)
-        if validate:
-            return make_response(f"{validate}", 400)
-        else:
-            nome = request.json['nome']
-            descricao = request.json['descricao']
-            formacao = request.json["formacao"]
-            formacao_curso = formacao_service.listar_formacao_id(formacao)
+        try:
+            curso_bd = curso_service.listar_curso_id(id)
+            if curso_bd is None:
+                return make_response("Curso não foi encontrado", 484)
+            cursoSchema = curso_schema.CursoSchema()
+            validate = cursoSchema.validate(request.json)
+            if validate:
+                return make_response(f"{validate}", 400)
+            else:
+                nome = request.json['nome']
+                descricao = request.json['descricao']
+                formacao = request.json["formacao_id"]
+                
+                formacao_curso = formacao_service.listar_formacao_id(formacao)
 
-            if formacao_curso is None:
-                return make_response(jsonify("Não foi possível encontrar a formação"), 404)
+                if formacao_curso is None:
+                    return make_response(jsonify("Não foi possível encontrar a formação"), 404)
 
-            resposta = curso_service.alterar_curso(id, nome, descricao, formacao_curso)
-            
-            if resposta is not None:
-                curso = curso_service.listar_curso_id(id)
-            return make_response(cursoSchema.dump(curso), 200)
-
+                resposta = curso_service.alterar_curso(id, nome, descricao, formacao)
+                
+                if resposta is not None:
+                    curso = curso_service.listar_curso_id(id)
+                return make_response(cursoSchema.dump(curso), 200)
+        except Exception as e:
+            return make_response({"error":str(e)}, 501)
 
     def delete(self, id):
         resposta = curso_service.delete_curso(id)

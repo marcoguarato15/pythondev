@@ -1,11 +1,11 @@
 from datetime import date
 
 class Curso():
-    def __init__(self, nome, descricao, formacao):
+    def __init__(self, nome, descricao, formacao_id):
         self.__nome = nome
         self.__descricao = descricao
         self.__data_criacao = date.today()
-        self.__formacao = formacao
+        self.__formacao_id = formacao_id
 
     @property
     def nome(self):
@@ -28,10 +28,10 @@ class Curso():
         return self.__data_criacao
     
     @property
-    def formacao(self):
-        return self.__formacao
+    def formacao_id(self):
+        return self.__formacao_id
     
-    @formacao.setter
-    def formacao(self, formacao):
-        self.__formacao = formacao
+    @formacao_id.setter
+    def formacao_id(self, formacao_id):
+        self.__formacao_id = formacao_id
     

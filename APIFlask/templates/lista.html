@@ -10,6 +10,7 @@
             <th scope="col">Nome</th>
             <th scope="col">Descrição</th>
             <th scope="col">Data de Criação</th>
+            <th scope="col">Formação</th>
             <th scope="col">Ações</th>
         </tr>
     </thead>
@@ -21,6 +22,7 @@
             <td>{{curso.nome}}</td>
             <td>{{curso.descricao}}</td>
             <td>{{curso.data_criacao}}</td>
+            <td>{{curso.formacao_id}}</td>
             <td>
                 <a class="btn btn-warning" href="{{url_for('put_curso', id=curso.id)}}">Editar</a>
                 <a class="btn btn-danger" onclick="confirm('Deseja excluir o curso?')" href="{{url_for('del_curso', id=curso.id)}}">Deletar</a>
