@@ -31,7 +31,7 @@ class CursoList(Resource):
                 return make_response(jsonify("Formação não foi encontrada"), 404)
 
             # Chama a entidade de Curso
-            novo_curso = curso.Curso(nome=nome, descricao=descricao, formacao=formacao)
+            novo_curso = curso.Curso(nome=nome, descricao=descricao, formacao_id=formacao)
 
             resultado = curso_service.cadastrar_curso(curso=novo_curso)
 
