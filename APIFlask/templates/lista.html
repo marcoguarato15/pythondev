@@ -22,10 +22,14 @@
             <td>{{curso.nome}}</td>
             <td>{{curso.descricao}}</td>
             <td>{{curso.data_criacao}}</td>
-            <td>{{curso.formacao_id}}</td>
+            {% for formacao in formacoes %}
+                {% if curso.formacao_id == formacao.id %}
+                <td>{{formacao.nome}}</td>
+                {% endif %}
+            {% endfor %}
             <td>
                 <a class="btn btn-warning" href="{{url_for('put_curso', id=curso.id)}}">Editar</a>
-                <a class="btn btn-danger" onclick="confirm('Deseja excluir o curso?')" href="{{url_for('del_curso', id=curso.id)}}">Deletar</a>
+                <a class="btn btn-danger" onclick="return confirm('Deseja excluir o Curso?')" href="{{url_for('del_curso', id=curso.id)}}">Deletar</a>
             </td>
             
         </tr>
