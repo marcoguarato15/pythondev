@@ -6,6 +6,8 @@ from api.services import curso_service, formacao_service
 from api.entidades.curso import Curso
 from api.entidades.formacao import Formacao
 
+from sqlalchemy.exc import IntegrityError
+
 @app.route("/cursos")
 def cursos():
     cursos = curso_service.listar_cursos()
@@ -14,7 +16,6 @@ def cursos():
     formacoes = formacao_service.listar_formacoes()
     f_schema = FormacaoSchema(many=True)
     formacoes_serializadas = f_schema.dump(formacoes)
-    print(formacoes_serializadas)
     return render_template('lista.html', cursos=cursos_serializados, formacoes=formacoes_serializadas)
 
 @app.route("/cursos/<int:id>")
@@ -131,12 +132,16 @@ def put_formacao(id):
 
 @app.route("/del_formacao/<int:id>")
 def del_formacao(id):
-    formacao = formacao_service.listar_formacao_id(id)
-    if formacao:
-        formacao = formacao_service.delete_formacao(id)
-        flash("Sucesso ao excluir formação","success")
-    else:
-        flash("Falha ao detectar formação","error")
+    try:
+        formacao = formacao_service.listar_formacao_id(id)
+        if formacao:
+            formacao = formacao_service.delete_formacao(id)
+            flash("Sucesso ao excluir formação","success")
+        else:
+            flash("Falha ao detectar formação","error")
+    except IntegrityError as e:
+        flash(f"Erro de integridade, impossível excluir","error")
+        print(e)
     return redirect(url_for('formacoes'))
 
 if __name__ == "__main__":

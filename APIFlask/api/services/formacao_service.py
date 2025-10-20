@@ -30,5 +30,5 @@ def delete_formacao(id):
         db.session.commit()
         return formacao
     else:
-        return -1
+        return None
     
