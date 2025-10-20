@@ -1,5 +1,8 @@
+# Definir o arquivo como FLASK_APP para o ambiente
+$env:FLASK_APP="nome_do_arquivo.py"
+
 # Inicializa a migration do Banco de dados para gerenciar as atualizações
-flask db init
+flask db init 
 
 # Faz o reconhecimento das atualizações e gera as migrações automaticamente
 flask db migrate

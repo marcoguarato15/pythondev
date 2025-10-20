@@ -2,7 +2,7 @@ from ..models import curso_model
 from api import db
 
 def cadastrar_curso(curso):
-    curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao, data_criacao=curso.data_criacao)
+    curso_bd = curso_model.Curso(nome=curso.nome, descricao=curso.descricao, data_criacao=curso.data_criacao, formacao=curso.formacao)
 
     db.session.add(curso_bd)
     db.session.commit()
@@ -17,8 +17,8 @@ def listar_curso_id(id):
     curso = curso_model.Curso.query.filter_by(id=id).first()
     return curso
 
-def alterar_curso(id, nome, descricao):
-    curso = curso_model.Curso.query.filter_by(id=id).update({"nome":nome, "descricao":descricao})
+def alterar_curso(id, nome, descricao,formacao):
+    curso = curso_model.Curso.query.filter_by(id=id).update({"nome":nome, "descricao":descricao, "formacao":formacao})
     db.session.commit()
     return curso
 
