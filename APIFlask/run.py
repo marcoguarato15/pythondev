@@ -11,7 +11,11 @@ def cursos():
     cursos = curso_service.listar_cursos()
     schema = CursoSchema(many=True)
     cursos_serializados = schema.dump(cursos)
-    return render_template('lista.html', cursos=cursos_serializados)
+    formacoes = formacao_service.listar_formacoes()
+    f_schema = FormacaoSchema(many=True)
+    formacoes_serializadas = f_schema.dump(formacoes)
+    print(formacoes_serializadas)
+    return render_template('lista.html', cursos=cursos_serializados, formacoes=formacoes_serializadas)
 
 @app.route("/cursos/<int:id>")
 def curso_id(id):
