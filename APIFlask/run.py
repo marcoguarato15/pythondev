@@ -118,9 +118,7 @@ def add_formacao():
                 formacao = formacao_service.cadastrar_formacao(Formacao(nome, descricao, professores_ids))
                 if formacao:
                     flash("Sucesso ao adicionar formação","success")
-                    nome = ""
-                    descricao = ""
-                    professores_ids = []
+                    return redirect(url_for("add_formacao"))
                 else:
                     flash("Falha ao adicionar Formação","error")
         else:
@@ -135,7 +133,7 @@ def add_formacao():
             flash(f"Preencha os campos corretamente: {erros}","error")
 
     professores = professor_service.listar_professores()
-
+    print(professores)
     return render_template("add_formacao.html", professores=professores, nome=nome, descricao=descricao, professores_ids=professores_ids)
 
 @app.route("/put_formacao/<int:id>", methods=["GET", "POST"])

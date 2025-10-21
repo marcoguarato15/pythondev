@@ -21,7 +21,7 @@
             <td>{{professor.idade}}</td>
             <td>
                 <a class="btn btn-warning" href="{{url_for('put_professor', id=professor.id)}}">Editar</a>
-                <a class="btn btn-danger" onclick="return confirm('Deseja excluir o Curso?')" href="{{url_for('del_professor', id=professor.id)}}">Deletar</a>
+                <a class="btn btn-danger" onclick="return confirm('Deseja excluir o Professor?')" href="{{url_for('del_professor', id=professor.id)}}">Deletar</a>
             </td>
             
         </tr>
