@@ -99,6 +99,7 @@ def add_formacao():
     descricao = ""
     professores_ids = []
     if request.method == "POST":
+
         nome = request.form.get("nome")
         descricao =  request.form.get("descricao")
         professores_ids = [int(p) for p in request.form.getlist("professores")]
@@ -110,12 +111,16 @@ def add_formacao():
             }
             formacaoSchema = FormacaoInputSchema()
             validate = formacaoSchema.validate(data)
+
             if validate:
                 flash(f"Informe os campos: {validate}","error")
             else:
                 formacao = formacao_service.cadastrar_formacao(Formacao(nome, descricao, professores_ids))
                 if formacao:
                     flash("Sucesso ao adicionar formação","success")
+                    nome = ""
+                    descricao = ""
+                    professores_ids = []
                 else:
                     flash("Falha ao adicionar Formação","error")
         else:
@@ -126,8 +131,11 @@ def add_formacao():
                 erros += " Descrição faltando "
             if professores_ids == []:
                 erros += " Professores faltando "
+
             flash(f"Preencha os campos corretamente: {erros}","error")
+
     professores = professor_service.listar_professores()
+
     return render_template("add_formacao.html", professores=professores, nome=nome, descricao=descricao, professores_ids=professores_ids)
 
 @app.route("/put_formacao/<int:id>", methods=["GET", "POST"])
