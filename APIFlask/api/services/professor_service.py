@@ -1,4 +1,6 @@
 from ..models import professor_model
+from flask import request
+from ..models.professor_model import Professor
 from api import db
 
 def cadastrar_professor(professor):
@@ -10,7 +12,9 @@ def cadastrar_professor(professor):
     return professor
 
 def listar_professores():
-    professor = professor_model.Professor.query.all()
+    page = request.args.get("page", 1, type=int)
+    per_page = 2
+    professor = Professor.query.paginate(page=page, per_page=per_page)
     return professor
 
 def listar_professor_id(id):

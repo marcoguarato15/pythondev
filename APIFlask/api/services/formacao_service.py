@@ -1,5 +1,7 @@
 from ..models import formacao_model
 from .professor_service import listar_professor_id
+from ..models.formacao_model import Formacao
+from flask import request
 from api import db
 
 def cadastrar_formacao(formacao):
@@ -14,7 +16,9 @@ def cadastrar_formacao(formacao):
     return formacao_bd
 
 def listar_formacoes():
-    formacao = formacao_model.Formacao.query.all()
+    page = request.args.get("page", 1, type=int)
+    per_page = 2
+    formacao = Formacao.query.paginate(page=page, per_page=per_page)
     return formacao
 
 def listar_formacao_id(id):

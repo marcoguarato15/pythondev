@@ -33,4 +33,14 @@
         {% endif %}
     </tbody>
 </table>
+{% if formacoes.has_prev %}
+<a href="{{url_for('formacoes', page=formacoes.prev_num)}}">Formações Anteriores</a>
+{% else %}
+    Formações listadas
+{% endif %}
+{% if formacoes.has_next %}
+<a href="{{url_for('formacoes', page=formacoes.next_num)}}">Próximas Formações</a>
+{% else %}
+    Formações listadas
+{% endif %}
 {% endblock conteudo %}

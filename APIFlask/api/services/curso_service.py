@@ -1,4 +1,6 @@
 from ..models import curso_model
+from flask import request
+from ..models.curso_model import Curso
 from api import db
 
 def cadastrar_curso(curso):
@@ -10,7 +12,9 @@ def cadastrar_curso(curso):
     return curso_bd
 
 def listar_cursos():
-    cursos = curso_model.Curso.query.all()
+    page = request.args.get("page", 1, type=int)
+    per_page = 2
+    cursos = Curso.query.paginate(page=page, per_page=per_page)
     return cursos
 
 def listar_curso_id(id):

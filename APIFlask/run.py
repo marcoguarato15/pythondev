@@ -14,11 +14,10 @@ from sqlalchemy.exc import IntegrityError
 def cursos():
     cursos = curso_service.listar_cursos()
     schema = CursoSchema(many=True)
-    cursos_serializados = schema.dump(cursos)
     formacoes = formacao_service.listar_formacoes()
     f_schema = FormacaoSchema(many=True)
     formacoes_serializadas = f_schema.dump(formacoes)
-    return render_template('lista.html', cursos=cursos_serializados, formacoes=formacoes_serializadas)
+    return render_template('lista.html', cursos=cursos, formacoes=formacoes_serializadas)
 
 @app.route("/cursos/<int:id>")
 def curso_id(id):
@@ -88,10 +87,9 @@ def del_curso(id):
 @app.route("/formacoes")
 def formacoes():
     formacoes = formacao_service.listar_formacoes()
-    f_schema = FormacaoSchema(many=True)
-    formacoes_serializadas = f_schema.dump(formacoes)
 
-    return render_template("lista_formacoes.html", formacoes=formacoes_serializadas)
+
+    return render_template("lista_formacoes.html", formacoes=formacoes)
 
 @app.route("/add_formacao", methods=["GET","POST"])
 def add_formacao():
@@ -184,10 +182,7 @@ def del_formacao(id):
 @app.route("/professores")
 def professores():
     professores = professor_service.listar_professores()
-    p_schema = ProfessorSchema(many=True)
-    professores_serializados = p_schema.dump(professores)
-
-    return render_template("lista_professor.html", professores=professores_serializados)
+    return render_template("lista_professor.html", professores=professores)
 
 @app.route("/add_professor", methods=["GET","POST"])
 def add_professor():
