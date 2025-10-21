@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h2>Login</h2>
+<hr>
+<form action="{{url_for('login')}}" class="form-group" method="POST">
+<div>
+    <label for="email" class="form-label">E-mail:</label>
+    <input type="text" class="form-control" name="email" id="email">
+</div>
+<div>
+    <label for="senha" class="form-label">Senha:</label>
+    <input type="password" class="form-control" name="senha" id="senha">
+</div>
+<button class="btn btn-success">Adicionar</button>
+</form>
+{% endblock conteudo %}

@@ -1,16 +1,47 @@
 from api import app
-from flask import render_template, request, flash, redirect, url_for
+from flask import render_template, request, flash, redirect, url_for, make_response
 from api.schemas.curso_schema import CursoSchema
 from api.schemas.formacao_schema import FormacaoSchema, FormacaoInputSchema
 from api.schemas.professor_schema import ProfessorSchema
-from api.services import curso_service, formacao_service, professor_service
+from api.services import curso_service, formacao_service, professor_service, usuario_service
 from api.entidades.curso import Curso
 from api.entidades.formacao import Formacao
 from api.entidades.professor import Professor
+from api.models.usuario_model import Usuario
+from api.schemas.login_schema import LoginSchema
+from flask_jwt_extended import set_access_cookies, create_access_token, jwt_required
+from datetime import timedelta
+
+
 
 from sqlalchemy.exc import IntegrityError
 
+@app.route("/login", methods=["GET","POST"])
+def login():
+    if request.method == "POST":
+        email = request.form.get("email")
+        senha = request.form.get("senha")
+        loginSchema = LoginSchema()
+        validate = loginSchema.validate({"email":email,"senha":senha})
+        if validate:
+            flash(f"Preencha os campos corretamente {validate}","error")
+        else:
+            usuario = usuario_service.get_usuario_by_email(email)
+            if usuario and usuario.decriptar_senha(senha):
+                access_token = create_access_token(
+                    identity=str(usuario.id),
+                    expires_delta=timedelta(seconds=100)
+                )
+                response = make_response(redirect(url_for("cursos")))
+                set_access_cookies(response, access_token)
+                return response
+            else:
+                flash("Credenciais inválidas","error")
+    
+    return render_template("login.html")
+
 @app.route("/cursos")
+@jwt_required()
 def cursos():
     cursos = curso_service.listar_cursos()
     schema = CursoSchema(many=True)
@@ -236,6 +267,7 @@ def del_professor(id):
         flash(f"Erro de integridade, impossível excluir","error")
         print(e)
     return redirect(url_for('professores'))
+
 
 if __name__ == "__main__":
     app.run()

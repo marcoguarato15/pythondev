@@ -2,6 +2,7 @@ from ..models import usuario_model
 from flask import request
 from api import db
 
+
 def cadastrar_usuario(usuario):
     usuario = usuario_model.Usuario(nome=usuario.nome, email=usuario.email, senha=usuario.senha)
     usuario.encriptar_senha()
@@ -9,6 +10,10 @@ def cadastrar_usuario(usuario):
     db.session.commit()
 
     return usuario
+
+def get_usuario_by_email(email):
+    usuario_email = usuario_model.Usuario.query.filter_by(email=email).first()
+    return usuario_email
 
 def listar_usuarios():
     page = request.args.get("page", 1, type=int)
