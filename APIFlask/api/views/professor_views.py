@@ -4,14 +4,14 @@ from ..schemas import professor_schema
 from ..entidades import professor
 from ..services import professor_service
 from flask import request, make_response, jsonify
+from ..models.professor_model import Professor
+from ..paginate import paginate
 
 class ProfessorList(Resource):
     def get(self):
-        professores = professor_service.listar_professores()
-        professorSchema = professor_schema.ProfessorSchema(many=True)
-        return make_response(professorSchema.dump(professores), 200)
+        professor_schema = professor_schema.ProfessorSchema(many=True)
+        return paginate(Professor, professor_schema)
     
-
     def post(self):
         # Cria o schema de validação de dados
         professorSchema = professor_schema.ProfessorSchema()

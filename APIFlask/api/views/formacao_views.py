@@ -4,12 +4,13 @@ from ..schemas import formacao_schema
 from ..entidades import formacao
 from ..services import formacao_service, professor_service
 from flask import request, make_response, jsonify
+from ..paginate import paginate
+from ..models.formacao_model import Formacao
 
 class FormacaoList(Resource):
     def get(self):
-        formacoes = formacao_service.listar_formacoes()
-        formacaoSchema = formacao_schema.FormacaoSchema(many=True)
-        return make_response(formacaoSchema.dump(formacoes), 200)
+        formacao_schema = formacao_schema.FormacaoSchema(many=True)
+        return paginate(Formacao, formacao_schema)
     
     def post(self):
         # Validação com o schema de entrada
