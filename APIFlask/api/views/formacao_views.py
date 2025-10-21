@@ -9,8 +9,8 @@ from ..models.formacao_model import Formacao
 
 class FormacaoList(Resource):
     def get(self):
-        formacao_schema = formacao_schema.FormacaoSchema(many=True)
-        return paginate(Formacao, formacao_schema)
+        formacaoSchema = formacao_schema.FormacaoSchema()
+        return paginate(Formacao, formacaoSchema)
     
     def post(self):
         # Validação com o schema de entrada

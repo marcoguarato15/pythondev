@@ -14,7 +14,7 @@ def paginate(model, schema):
 
     prev = url_for(
         request.endpoint,
-        page = page_obj.prev_num if page_obj.has_prev else page_obj,
+        page = page_obj.prev_num if page_obj.has_prev else page_obj.page,
         per_page = per_page,
         **request.view_args
     )

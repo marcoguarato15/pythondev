@@ -9,8 +9,8 @@ from ..paginate import paginate
 
 class ProfessorList(Resource):
     def get(self):
-        professor_schema = professor_schema.ProfessorSchema(many=True)
-        return paginate(Professor, professor_schema)
+        professorSchema = professor_schema.ProfessorSchema(many=True)
+        return paginate(Professor, professorSchema)
     
     def post(self):
         # Cria o schema de validação de dados

@@ -9,8 +9,8 @@ from ..models.curso_model import Curso
 
 class CursoList(Resource):
     def get(self):
-        curso_schema = curso_schema.CursoSchema(many=True)
-        return paginate(Curso, curso_schema)
+        cursoSchema = curso_schema.CursoSchema(many=True)
+        return paginate(Curso, cursoSchema)
     
 
     def post(self):
