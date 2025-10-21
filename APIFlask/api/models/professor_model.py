@@ -7,3 +7,4 @@ class Professor(db.Model):
     nome = db.Column(db.String(100), nullable=False)
     idade = db.Column(db.Integer, nullable=False)
 
+    formacoes = db.relationship("Formacao", secondary="professor_formacao", back_populates="professores")

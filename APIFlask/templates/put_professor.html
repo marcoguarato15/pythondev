@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% block conteudo %}
+<h2>Adicionar Curso</h2>
+<hr>
+<form action="{{url_for('put_professor', id=professor.id)}}" class="form-group" method="POST">
+<div>
+    <label for="nome" class="form-label">Nome:</label>
+    <input type="text" value="{{professor.nome}}" class="form-control" name="nome" id="nome">
+</div>
+<div>
+    <label for="idade" class="form-label">Idade:</label>
+    <input type="number" value="{{professor.idade}}" class="form-control" name="idade" id="idade">
+</div>
+<button class="btn btn-success">Editar</button>
+</form>
+{% endblock conteudo %}

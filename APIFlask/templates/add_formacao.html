@@ -3,14 +3,24 @@
 <h2>Adicionar Curso</h2>
 <hr>
 <form action="{{url_for('add_formacao')}}" class="form-group" method="POST">
-<div>
-    <label for="nome" class="form-label">Nome:</label>
-    <input type="text" class="form-control" name="nome" id="nome">
-</div>
-<div>
-    <label for="descricao" class="form-label">Descrição:</label>
-    <input type="text" class="form-control" name="descricao" id="descricao">
-</div>
-<button class="btn btn-success">Adicionar</button>
+    <div>
+        <label for="nome" class="form-label">Nome:</label>
+        <input type="text" class="form-control" value="{% if nome %}{{nome}}{% endif %}" name="nome" id="nome">
+    </div>
+    <div>
+        <label for="descricao" class="form-label">Descrição:</label>
+        <input type="text" class="form-control" value="{% if descricao %}{{descricao}}{% endif %}" name="descricao" id="descricao">
+    </div>
+    <div>
+        {% for professor in professores %}
+        <div class="form-check">
+            <input class="form-check-input" name="professores" type="checkbox" value="{{professor.id}}" id="flex_{{professor.id}}" {% if professor.id in professores_ids %}checked{% endif %}>
+            <label class="form-check-label" for="flex_{{professor.id}}">
+                {{professor.nome}}
+            </label>
+        </div>
+        {% endfor %}
+    </div>
+    <button class="btn btn-success">Adicionar</button>
 </form>
 {% endblock conteudo %}

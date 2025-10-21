@@ -2,7 +2,7 @@ from flask_restful import Resource
 from api import api
 from ..schemas import formacao_schema
 from ..entidades import formacao
-from ..services import formacao_service
+from ..services import formacao_service, professor_service
 from flask import request, make_response, jsonify
 
 class FormacaoList(Resource):
@@ -11,25 +11,31 @@ class FormacaoList(Resource):
         formacaoSchema = formacao_schema.FormacaoSchema(many=True)
         return make_response(formacaoSchema.dump(formacoes), 200)
     
-
     def post(self):
-        # Cria o schema de validação de dados
-        formacaoSchema = formacao_schema.FormacaoSchema()
-        # Passa a validação
-        validate = formacaoSchema.validate(request.json)
-        # Se tiver erro fale onde estão os erros e retorne junto o status 400
+        # Validação com o schema de entrada
+        input_schema = formacao_schema.FormacaoSchema()
+        data = {
+            "nome":request.json["nome"],
+            "descricao":request.json["descricao"],
+            "professores":[input_schema.dump(professor_service.listar_professor_id(id)) for id in request.json["professores"]]
+            }
+        validate = input_schema.validate(data)
+
         if validate:
-            return make_response(jsonify(validate),400)
-        else:
-            nome = request.json["nome"]
-            descricao = request.json["descricao"]
+            return make_response(jsonify(validate), 400)
 
-            # Chama a entidade de Formacao
-            nova_formacao = formacao.Formacao(nome=nome, descricao=descricao)
+        nome = request.json["nome"]
+        descricao = request.json["descricao"]
+        professores = request.json["professores"]
+        print(professores)
 
-            resultado = formacao_service.cadastrar_formacao(formacao=nova_formacao)
+        nova_formacao = formacao.Formacao(nome=nome, descricao=descricao, professores=professores)
 
-            return make_response(formacaoSchema.dump(resultado), 201)
+        resultado = formacao_service.cadastrar_formacao(formacao=nova_formacao)
+
+        # Serialização com o schema completo
+        output_schema = formacao_schema.FormacaoSchema()
+        return make_response(output_schema.dump(resultado), 201)
 
 class FormacaoDetail(Resource):
     def get(self, id):
@@ -52,8 +58,10 @@ class FormacaoDetail(Resource):
         else:
             nome = request.json['nome']
             descricao = request.json['descricao']
+            professores = request.json["professores"]
 
-            resposta = formacao_service.alterar_formacao(id, nome, descricao)
+            # Chama a entidade de Formacao
+            resposta = formacao_service.alterar_formacao(id, nome, descricao, professores)
             if resposta is not None:
                 formacao = formacao_service.listar_formacao_id(id)
             return make_response(formacaoSchema.dump(formacao), 200)
