@@ -5,8 +5,16 @@ from marshmallow import fields
 class ProfessorSchema(ma.SQLAlchemyAutoSchema):
     class Meta:
         model = professor_model.Professor
-        _load_instance = True
+        load_instance = True
         fields = ("id", "nome", "idade")
 
     nome = fields.String(required=True)
     idade = fields.Integer(required=True)
+
+    _links = ma.Hyperlinks(
+        {
+            "get":ma.URLFor("professordetail", values={"id":"<id>"}),
+            "put":ma.URLFor("professordetail", values={"id":"<id>"}),
+            "delete":ma.URLFor("professordetail", values={"id":"<id>"})
+        }
+    )

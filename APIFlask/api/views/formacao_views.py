@@ -9,7 +9,7 @@ from ..models.formacao_model import Formacao
 
 class FormacaoList(Resource):
     def get(self):
-        formacaoSchema = formacao_schema.FormacaoSchema()
+        formacaoSchema = formacao_schema.FormacaoSchema(many=True)
         return paginate(Formacao, formacaoSchema)
     
     def post(self):

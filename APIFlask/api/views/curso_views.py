@@ -83,5 +83,5 @@ class CursoDetail(Resource):
         else:
             return make_response("Sucesso ao excluir o curso", 200)
 
-api.add_resource(CursoList, '/api/cursos')
-api.add_resource(CursoDetail, '/api/cursos/<int:id>')
+api.add_resource(CursoList, '/api/cursos', endpoint="cursolist")
+api.add_resource(CursoDetail, '/api/cursos/<int:id>', endpoint="cursodetail")
