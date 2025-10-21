@@ -42,13 +42,12 @@
     </tbody>
 </table>
 {% if cursos.has_prev %}
-<a href="{{url_for('cursos', page=cursos.prev_num)}}">Cursos Anteriores</a>
-{% else %}
-    Cursos listados
+<a href="{{url_for('cursos', page=cursos.prev_num)}}">{{cursos.prev_num}}</a>
+{% endif %}
+{% if cursos.page %}
+{{cursos.page}}
 {% endif %}
 {% if cursos.has_next %}
-<a href="{{url_for('cursos', page=cursos.next_num)}}">Próximos Cursos</a>
-{% else %}
-    Cursos listados
+<a href="{{url_for('cursos', page=cursos.next_num)}}">{{cursos.next_num}}</a>
 {% endif %}
 {% endblock conteudo %}

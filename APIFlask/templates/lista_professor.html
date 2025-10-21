@@ -21,9 +21,10 @@
             <td>{{professor.idade}}</td>
             <td>
                 <a class="btn btn-warning" href="{{url_for('put_professor', id=professor.id)}}">Editar</a>
-                <a class="btn btn-danger" onclick="return confirm('Deseja excluir o Professor?')" href="{{url_for('del_professor', id=professor.id)}}">Deletar</a>
+                <a class="btn btn-danger" onclick="return confirm('Deseja excluir o Professor?')"
+                    href="{{url_for('del_professor', id=professor.id)}}">Deletar</a>
             </td>
-            
+
         </tr>
         {% endfor %}
         {% else %}
@@ -34,13 +35,12 @@
     </tbody>
 </table>
 {% if professores.has_prev %}
-<a href="{{url_for('professores', page=professores.prev_num)}}">Professores Anteriores</a>
-{% else %}
-    Professores listados
+<a href="{{url_for('professores', page=professores.prev_num)}}">{{professores.prev_num}}</a>
+{% endif %}
+{% if professores.page %}
+{{professores.page}}
 {% endif %}
 {% if professores.has_next %}
-<a href="{{url_for('professores', page=professores.next_num)}}">Próximos Professores</a>
-{% else %}
-    Professores listados
+<a href="{{url_for('professores', page=professores.next_num)}}">{{professores.next_num}}</a>
 {% endif %}
 {% endblock conteudo %}

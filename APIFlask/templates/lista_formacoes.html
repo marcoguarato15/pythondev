@@ -34,13 +34,12 @@
     </tbody>
 </table>
 {% if formacoes.has_prev %}
-<a href="{{url_for('formacoes', page=formacoes.prev_num)}}">Formações Anteriores</a>
-{% else %}
-    Formações listadas
+<a href="{{url_for('formacoes', page=formacoes.prev_num)}}">{{formacoes.prev_num}}</a>
+{% endif %}
+{% if formacoes.page %}
+{{formacoes.page}}
 {% endif %}
 {% if formacoes.has_next %}
-<a href="{{url_for('formacoes', page=formacoes.next_num)}}">Próximas Formações</a>
-{% else %}
-    Formações listadas
+<a href="{{url_for('formacoes', page=formacoes.next_num)}}">{{formacoes.next_num}}</a>
 {% endif %}
 {% endblock conteudo %}
