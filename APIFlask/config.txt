@@ -12,3 +12,6 @@ SQLALCHEMY_DATABASE_URI = f'mysql+pymysql://{USERNAME}:{PASSWORD}@{SERVER}/{DB}'
 
 # Para utilizar o migration
 SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+# Chave para o flash message e jwt
+SECRET_KEY="chave_secreta"
