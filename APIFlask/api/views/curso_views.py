@@ -6,13 +6,16 @@ from ..services import curso_service, formacao_service
 from flask import request, make_response, jsonify
 from ..paginate import paginate
 from ..models.curso_model import Curso
+from flask_jwt_extended import verify_jwt_in_request, jwt_required
+from flask_jwt_extended.exceptions import JWTExtendedException
 
 class CursoList(Resource):
+    @jwt_required()
     def get(self):
         cursoSchema = curso_schema.CursoSchema(many=True)
         return paginate(Curso, cursoSchema)
     
-
+    @jwt_required()
     def post(self):
         # Cria o schema de validação de dados
         cursoSchema = curso_schema.CursoSchema()
@@ -39,6 +42,7 @@ class CursoList(Resource):
             return make_response(cursoSchema.dump(resultado), 201)
 
 class CursoDetail(Resource):
+    @jwt_required()
     def get(self, id):
         curso = curso_service.listar_curso_id(id)
         
@@ -48,6 +52,7 @@ class CursoDetail(Resource):
         cursoSchema = curso_schema.CursoSchema()
         return make_response(cursoSchema.dump(curso), 200)
 
+    @jwt_required()
     def put(self, id):
         try:
             curso_bd = curso_service.listar_curso_id(id)
@@ -74,7 +79,8 @@ class CursoDetail(Resource):
                 return make_response(cursoSchema.dump(curso), 200)
         except Exception as e:
             return make_response({"error":str(e)}, 501)
-
+        
+    @jwt_required()
     def delete(self, id):
         resposta = curso_service.delete_curso(id)
         print(resposta)

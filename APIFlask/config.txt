@@ -15,3 +15,11 @@ SQLALCHEMY_TRACK_MODIFICATIONS = True
 
 # Chave para o flash message e jwt
 SECRET_KEY="chave_secreta"
+
+# Configuração de cookies para autenticação da api e do frontend
+# colocando o local onde os tokens serão armazenados
+JWT_TOKEN_LOCATION = ["cookies"]
+# colocando o nome que serão armazenados para busca
+JWT_ACCESS_COOKIE_NAME = "access_token_cookie"
+# Removendo o CSRF_PROTECT para funcionar sem passar o token CSRF pois ele não é mostrado após o login
+JWT_COOKIE_CSRF_PROTECT = False

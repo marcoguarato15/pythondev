@@ -6,12 +6,15 @@ from ..services import usuario_service
 from flask import request, make_response, jsonify
 from ..models.usuario_model import Usuario
 from ..paginate import paginate
+from flask_jwt_extended import jwt_required
 
 class UsuarioList(Resource):
+    @jwt_required()
     def get(self):
         usuarioSchema = usuario_schema.UsuarioSchema(many=True)
         return paginate(Usuario, usuarioSchema)
     
+    @jwt_required()
     def post(self):
         # Cria o schema de validação de dados
         usuarioSchema = usuario_schema.UsuarioSchema()
@@ -33,6 +36,7 @@ class UsuarioList(Resource):
             return make_response(usuarioSchema.dump(resultado), 201)
 
 class UsuarioDetail(Resource):
+    @jwt_required()
     def get(self, id):
         usuario = usuario_service.listar_usuario_id(id)
         
@@ -42,6 +46,7 @@ class UsuarioDetail(Resource):
         usuarioSchema = usuario_schema.UsuarioSchema()
         return make_response(usuarioSchema.dump(usuario), 200)
 
+    @jwt_required()
     def put(self, id):
         usuario = usuario_service.listar_usuario_id(id)
         if usuario is None:
@@ -60,7 +65,7 @@ class UsuarioDetail(Resource):
                 usuario = usuario_service.listar_usuario_id(id)
             return make_response(usuarioSchema.dump(usuario), 200)
 
-
+    @jwt_required()
     def delete(self, id):
         resposta = usuario_service.delete_usuario(id)
         print(resposta)

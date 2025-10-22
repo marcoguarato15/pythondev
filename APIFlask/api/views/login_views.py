@@ -10,7 +10,6 @@ from ..models.usuario_model import Usuario
 from ..paginate import paginate
 
 class LoginList(Resource):
-
     def post(self):
         # Cria o schema de validação de dados
         loginSchema = login_schema.LoginSchema()
@@ -27,7 +26,7 @@ class LoginList(Resource):
 
             if usuario and usuario.decriptar_senha(senha):
                 access_token = create_access_token(
-                    identity=usuario.id,
+                    identity=str(usuario.id),
                     expires_delta=timedelta(seconds=100)
                 )
                 return make_response(jsonify(
@@ -40,9 +39,5 @@ class LoginList(Resource):
                 return make_response(jsonify({
                     "message":"Credenciais inválidas"
                 }), 401)
-
-            
-
-
 
 api.add_resource(LoginList, '/api/login')
