@@ -8,9 +8,9 @@ from api.entidades.curso import Curso
 from api.entidades.formacao import Formacao
 from api.entidades.professor import Professor
 from api.schemas.login_schema import LoginSchema
-from flask_jwt_extended import set_access_cookies, create_access_token, jwt_required
+from flask_jwt_extended import set_access_cookies, create_access_token, jwt_required, set_refresh_cookies, create_refresh_token
 from datetime import timedelta
-
+from api.decorators.jwt_decorator import jwt_optional_refresh
 
 
 from sqlalchemy.exc import IntegrityError
@@ -29,9 +29,13 @@ def login():
             if usuario and usuario.decriptar_senha(senha):
                 access_token = create_access_token(
                     identity=str(usuario.id),
-                    expires_delta=timedelta(seconds=100)
+                    expires_delta=timedelta(seconds=10)
+                )
+                refresh_token = create_refresh_token(
+                    identity=str(usuario.id)
                 )
                 response = make_response(redirect(url_for("cursos")))
+                set_refresh_cookies(response, refresh_token)
                 set_access_cookies(response, access_token)
                 return response
             else:
@@ -40,6 +44,7 @@ def login():
     return render_template("login.html")
 
 @app.route("/cursos")
+@jwt_optional_refresh
 @jwt_required()
 def cursos():
     cursos = curso_service.listar_cursos()
@@ -50,7 +55,7 @@ def cursos():
     return render_template('lista.html', cursos=cursos, formacoes=formacoes_serializadas)
 
 @app.route("/cursos/<int:id>")
-@jwt_required()
+@jwt_optional_refresh
 def curso_id(id):
     curso = curso_service.listar_curso_id(id)
     if curso:
@@ -61,7 +66,7 @@ def curso_id(id):
         return render_template("lista.html", cursos=None)
 
 @app.route("/add_curso", methods=["GET","POST"])
-@jwt_required()
+@jwt_optional_refresh
 def add_curso():
     formacoes = formacao_service.listar_formacoes()
     print(formacoes)
@@ -85,7 +90,7 @@ def add_curso():
     return render_template("add_curso.html", formacoes=formacoes)
 
 @app.route("/put_curso/<int:id>", methods=["GET", "POST"])
-@jwt_required()
+@jwt_optional_refresh
 def put_curso(id):
     schema = CursoSchema()
     formacoes = formacao_service.listar_formacoes()
@@ -108,7 +113,7 @@ def put_curso(id):
     return render_template('put_curso.html', curso=schema.dump(curso), formacoes=formacoes)
 
 @app.route("/del_curso/<int:id>", methods=["GET", "POST"])
-@jwt_required()
+@jwt_optional_refresh
 def del_curso(id):
     resposta = curso_service.delete_curso(id)
     if resposta == -1:
@@ -119,7 +124,7 @@ def del_curso(id):
     return redirect(url_for("cursos"))
 
 @app.route("/formacoes")
-@jwt_required()
+@jwt_optional_refresh
 def formacoes():
     formacoes = formacao_service.listar_formacoes()
 
@@ -127,7 +132,7 @@ def formacoes():
     return render_template("lista_formacoes.html", formacoes=formacoes)
 
 @app.route("/add_formacao", methods=["GET","POST"])
-@jwt_required()
+@jwt_optional_refresh
 def add_formacao():
     nome = ""
     descricao = ""
@@ -171,7 +176,7 @@ def add_formacao():
     return render_template("add_formacao.html", professores=professores, nome=nome, descricao=descricao, professores_ids=professores_ids)
 
 @app.route("/put_formacao/<int:id>", methods=["GET", "POST"])
-@jwt_required()
+@jwt_optional_refresh
 def put_formacao(id):
     formacao = formacao_service.listar_formacao_id(id)
     professores = professor_service.listar_professores()
@@ -202,7 +207,7 @@ def put_formacao(id):
     return render_template("put_formacao.html", formacao=formacao, professores=professores)
 
 @app.route("/del_formacao/<int:id>")
-@jwt_required()
+@jwt_optional_refresh
 def del_formacao(id):
     try:
         formacao = formacao_service.listar_formacao_id(id)
@@ -218,13 +223,13 @@ def del_formacao(id):
 
 
 @app.route("/professores")
-@jwt_required()
+@jwt_optional_refresh
 def professores():
     professores = professor_service.listar_professores()
     return render_template("lista_professor.html", professores=professores)
 
 @app.route("/add_professor", methods=["GET","POST"])
-@jwt_required()
+@jwt_optional_refresh
 def add_professor():
     if request.method == "POST":
         if (nome := request.form.get("nome")) and (idade := request.form.get("idade")):
@@ -246,7 +251,7 @@ def add_professor():
     return render_template("add_professor.html")
 
 @app.route("/put_professor/<int:id>",methods=["GET","POST"])
-@jwt_required()
+@jwt_optional_refresh
 def put_professor(id):
     professor = professor_service.listar_professor_id(id)
     if professor is None:
@@ -265,7 +270,7 @@ def put_professor(id):
     return render_template("put_professor.html", professor=professor)
 
 @app.route("/del_professor/<int:id>")
-@jwt_required()
+@jwt_optional_refresh
 def del_professor(id):
     try:
         professor = professor_service.listar_professor_id(id)

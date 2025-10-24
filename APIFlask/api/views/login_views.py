@@ -1,13 +1,11 @@
 from flask_restful import Resource
 from api import api
 from ..schemas import login_schema
-from flask_jwt_extended import create_access_token
+from flask_jwt_extended import create_access_token, create_refresh_token
 from datetime import timedelta
 
 from ..services import usuario_service
 from flask import request, make_response, jsonify
-from ..models.usuario_model import Usuario
-from ..paginate import paginate
 
 class LoginList(Resource):
     def post(self):
@@ -29,9 +27,14 @@ class LoginList(Resource):
                     identity=str(usuario.id),
                     expires_delta=timedelta(seconds=100)
                 )
+                refresh_token = create_refresh_token(
+                    identity=str(usuario.id)
+                )
+
                 return make_response(jsonify(
                     {
                         "access_token":access_token,
+                        "refresh_token":refresh_token,
                         "message":"Login realizado com sucesso"
                     }
                 ), 200)
