@@ -1,20 +1,18 @@
 from flask_restful import Resource
 from api import api
 from ..schemas import usuario_schema
-from ..entidades import usuario
 from ..services import usuario_service
 from flask import request, make_response, jsonify
 from ..models.usuario_model import Usuario
 from ..paginate import paginate
-from flask_jwt_extended import jwt_required
 
 class UsuarioList(Resource):
-    @jwt_required()
+    
     def get(self):
         usuarioSchema = usuario_schema.UsuarioSchema(many=True)
         return paginate(Usuario, usuarioSchema)
     
-    @jwt_required()
+    
     def post(self):
         # Cria o schema de validação de dados
         usuarioSchema = usuario_schema.UsuarioSchema()
@@ -27,16 +25,17 @@ class UsuarioList(Resource):
             nome = request.json["nome"]
             email = request.json["email"]
             senha = request.json["senha"]
+            is_admin = request.json["is_admin"]
 
             # Chama a entidade de Professor
-            novo_usuario = Usuario(nome=nome, email=email, senha=senha)
+            novo_usuario = Usuario(nome=nome, email=email, senha=senha, is_admin=is_admin)
 
             resultado = usuario_service.cadastrar_usuario(usuario=novo_usuario)
 
             return make_response(usuarioSchema.dump(resultado), 201)
 
 class UsuarioDetail(Resource):
-    @jwt_required()
+    
     def get(self, id):
         usuario = usuario_service.listar_usuario_id(id)
         
@@ -46,7 +45,7 @@ class UsuarioDetail(Resource):
         usuarioSchema = usuario_schema.UsuarioSchema()
         return make_response(usuarioSchema.dump(usuario), 200)
 
-    @jwt_required()
+    
     def put(self, id):
         usuario = usuario_service.listar_usuario_id(id)
         if usuario is None:
@@ -59,13 +58,14 @@ class UsuarioDetail(Resource):
             nome = request.json["nome"]
             email = request.json["email"]
             senha = request.json["senha"]
+            is_admin = request.json["is_admin"]
 
-            resposta = usuario_service.alterar_usuario(id, nome, email, senha)
+            resposta = usuario_service.alterar_usuario(id, nome, email, senha, is_admin)
             if resposta is not None:
                 usuario = usuario_service.listar_usuario_id(id)
             return make_response(usuarioSchema.dump(usuario), 200)
 
-    @jwt_required()
+    
     def delete(self, id):
         resposta = usuario_service.delete_usuario(id)
         print(resposta)

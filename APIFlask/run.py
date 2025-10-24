@@ -29,7 +29,7 @@ def login():
             if usuario and usuario.decriptar_senha(senha):
                 access_token = create_access_token(
                     identity=str(usuario.id),
-                    expires_delta=timedelta(seconds=10)
+                    expires_delta=timedelta(minutes=15)
                 )
                 refresh_token = create_refresh_token(
                     identity=str(usuario.id)
@@ -45,7 +45,6 @@ def login():
 
 @app.route("/cursos")
 @jwt_optional_refresh
-@jwt_required()
 def cursos():
     cursos = curso_service.listar_cursos()
     schema = CursoSchema(many=True)

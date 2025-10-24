@@ -6,7 +6,7 @@ from ..services import curso_service, formacao_service
 from flask import request, make_response, jsonify
 from ..paginate import paginate
 from ..models.curso_model import Curso
-from flask_jwt_extended import verify_jwt_in_request, jwt_required
+from flask_jwt_extended import verify_jwt_in_request, jwt_required, get_jwt
 from flask_jwt_extended.exceptions import JWTExtendedException
 
 class CursoList(Resource):
@@ -17,6 +17,10 @@ class CursoList(Resource):
     
     @jwt_required()
     def post(self):
+        claims = get_jwt()
+        if claims["roles"] != "admin":
+            return make_response(jsonify({"message": "Usuário não possui permissão"}))
+        
         # Cria o schema de validação de dados
         cursoSchema = curso_schema.CursoSchema()
         # Passa a validação

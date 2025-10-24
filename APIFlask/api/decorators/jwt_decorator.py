@@ -14,7 +14,7 @@ def jwt_optional_refresh(view_func):
                 identity = get_jwt_identity()
                 new_access_token = create_access_token(
                     identity=identity,
-                    expires_delta=timedelta(seconds=10)
+                    expires_delta=timedelta(minutes=15)
                     )
                 new_refresh_token = create_refresh_token(identity=identity)
                 response = make_response(view_func(*args, **kwargs))

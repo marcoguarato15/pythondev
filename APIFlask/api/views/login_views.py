@@ -1,5 +1,5 @@
 from flask_restful import Resource
-from api import api
+from api import api, jwt
 from ..schemas import login_schema
 from flask_jwt_extended import create_access_token, create_refresh_token
 from datetime import timedelta
@@ -8,6 +8,17 @@ from ..services import usuario_service
 from flask import request, make_response, jsonify
 
 class LoginList(Resource):
+
+    @jwt.additional_claims_loader
+    def add_claims_to_access_token(identity):
+        usuario_token = usuario_service.listar_usuario_id(id=identity)
+        if usuario_token.is_admin:
+            roles = "admin"
+        else:
+            roles = "user"
+
+        return {"roles":roles}
+
     def post(self):
         # Cria o schema de validação de dados
         loginSchema = login_schema.LoginSchema()
@@ -25,7 +36,7 @@ class LoginList(Resource):
             if usuario and usuario.decriptar_senha(senha):
                 access_token = create_access_token(
                     identity=str(usuario.id),
-                    expires_delta=timedelta(seconds=100)
+                    expires_delta=timedelta(minutes=15)
                 )
                 refresh_token = create_refresh_token(
                     identity=str(usuario.id)
