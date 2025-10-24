@@ -1,7 +1,8 @@
 from flask_jwt_extended import verify_jwt_in_request, get_jwt_identity, create_access_token
 from flask_jwt_extended import  set_access_cookies, set_refresh_cookies, create_refresh_token, get_jwt
-from flask import make_response, flash, redirect, url_for, jsonify
+from flask import make_response, flash, redirect, url_for, jsonify, request
 from flask_jwt_extended.exceptions import NoAuthorizationError
+from api.services.usuario_service import listar_usuario_api_key
 from jwt import ExpiredSignatureError
 from datetime import timedelta
 from functools import wraps
@@ -50,4 +51,19 @@ def admin_required(fn):
         else:
             return fn(*args, **kwargs)
         
+    return wrapper
+
+def api_key_required(fn):
+    @wraps(fn)
+    def wrapper(*args, **kwargs):
+        # Necessário estar no padrão do flask X-NOME-DA-CHAVE se não ele ignora este header e não funciona
+        api_key = request.headers.get("X-API-KEY")
+        if api_key is not None:
+            usuario = listar_usuario_api_key(api_key)
+            if usuario.api_key == api_key:
+                return fn(*args, **kwargs)
+            else:
+                return make_response(jsonify({"message":"Impedido, api key inválida"}), 401)
+        else:
+            return make_response(jsonify({"message":"Header api key faltando"}), 400)
     return wrapper

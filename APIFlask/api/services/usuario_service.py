@@ -4,7 +4,7 @@ from api import db
 
 
 def cadastrar_usuario(usuario):
-    usuario = usuario_model.Usuario(nome=usuario.nome, email=usuario.email, senha=usuario.senha, is_admin=usuario.is_admin)
+    usuario = usuario_model.Usuario(nome=usuario.nome, email=usuario.email, senha=usuario.senha, is_admin=usuario.is_admin, api_key=usuario.api_key)
     usuario.encriptar_senha()
     db.session.add(usuario)
     db.session.commit()
@@ -23,7 +23,10 @@ def listar_usuarios():
 
 def listar_usuario_id(id):
     usuario = usuario_model.Usuario.query.filter_by(id=id).first()
-    print("u_serv", usuario,"id u_serv" ,id)
+    return usuario
+
+def listar_usuario_api_key(api_key):
+    usuario = usuario_model.Usuario.query.filter_by(api_key=api_key).first()
     return usuario
 
 def alterar_usuario(id, nome, email, senha):
