@@ -21,5 +21,6 @@ SECRET_KEY="chave_secreta"
 JWT_TOKEN_LOCATION = ["cookies"]
 # colocando o nome que serão armazenados para busca
 JWT_ACCESS_COOKIE_NAME = "access_token_cookie"
-# Removendo o CSRF_PROTECT para funcionar sem passar o token CSRF pois ele não é mostrado após o login
+# Removendo o CSRF_PROTECT para funcionar sem passar o token CSRF pois sem javascript 
+# não é possivel passar no formulário, o que torna o jinja inútil ao fazer
 JWT_COOKIE_CSRF_PROTECT = False

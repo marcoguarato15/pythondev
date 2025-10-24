@@ -8,7 +8,7 @@ from api.entidades.curso import Curso
 from api.entidades.formacao import Formacao
 from api.entidades.professor import Professor
 from api.schemas.login_schema import LoginSchema
-from flask_jwt_extended import set_access_cookies, create_access_token, jwt_required, set_refresh_cookies, create_refresh_token
+from flask_jwt_extended import set_access_cookies, create_access_token, set_refresh_cookies, create_refresh_token, get_jwt
 from datetime import timedelta
 from api.decorators.jwt_decorator import jwt_optional_refresh
 
@@ -68,6 +68,11 @@ def curso_id(id):
 @jwt_optional_refresh
 def add_curso():
     formacoes = formacao_service.listar_formacoes()
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("cursos"))
+
     print(formacoes)
     if request.method == "POST":
         if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")) and (formacao_id := request.form.get("formacao_id")):
@@ -91,8 +96,13 @@ def add_curso():
 @app.route("/put_curso/<int:id>", methods=["GET", "POST"])
 @jwt_optional_refresh
 def put_curso(id):
-    schema = CursoSchema()
     formacoes = formacao_service.listar_formacoes()
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("cursos"))
+
+    schema = CursoSchema()
     if request.method == "POST":
         if (nome := request.form.get("nome")) and (descricao := request.form.get("descricao")):
             validate = schema.validate(request.form)
@@ -114,6 +124,11 @@ def put_curso(id):
 @app.route("/del_curso/<int:id>", methods=["GET", "POST"])
 @jwt_optional_refresh
 def del_curso(id):
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("cursos"))
+
     resposta = curso_service.delete_curso(id)
     if resposta == -1:
         flash("Falha ao excluir curso","error")
@@ -136,6 +151,11 @@ def add_formacao():
     nome = ""
     descricao = ""
     professores_ids = []
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("formacoes"))
+
     if request.method == "POST":
 
         nome = request.form.get("nome")
@@ -179,7 +199,10 @@ def add_formacao():
 def put_formacao(id):
     formacao = formacao_service.listar_formacao_id(id)
     professores = professor_service.listar_professores()
-
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("formacoes"))
     if formacao is None:
         flash("Falha ao solicitar formação", "error")
         return redirect(url_for("formacoes"))
@@ -208,6 +231,10 @@ def put_formacao(id):
 @app.route("/del_formacao/<int:id>")
 @jwt_optional_refresh
 def del_formacao(id):
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("formacoes"))
     try:
         formacao = formacao_service.listar_formacao_id(id)
         if formacao:
@@ -230,6 +257,10 @@ def professores():
 @app.route("/add_professor", methods=["GET","POST"])
 @jwt_optional_refresh
 def add_professor():
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("professores"))
     if request.method == "POST":
         if (nome := request.form.get("nome")) and (idade := request.form.get("idade")):
             nome_professor = nome
@@ -252,6 +283,10 @@ def add_professor():
 @app.route("/put_professor/<int:id>",methods=["GET","POST"])
 @jwt_optional_refresh
 def put_professor(id):
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("professores"))
     professor = professor_service.listar_professor_id(id)
     if professor is None:
         flash("Falha ao solicitar professor", "error")
@@ -271,6 +306,10 @@ def put_professor(id):
 @app.route("/del_professor/<int:id>")
 @jwt_optional_refresh
 def del_professor(id):
+    claims = get_jwt()
+    if claims["roles"] != "admin":
+        flash("Usuario sem autorização!","error")
+        return redirect(url_for("professores"))
     try:
         professor = professor_service.listar_professor_id(id)
         if professor:

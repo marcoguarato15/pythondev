@@ -23,6 +23,7 @@ def listar_usuarios():
 
 def listar_usuario_id(id):
     usuario = usuario_model.Usuario.query.filter_by(id=id).first()
+    print("u_serv", usuario,"id u_serv" ,id)
     return usuario
 
 def alterar_usuario(id, nome, email, senha):

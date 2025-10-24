@@ -7,6 +7,7 @@ from flask import request, make_response, jsonify
 from ..models.professor_model import Professor
 from ..paginate import paginate
 from flask_jwt_extended import jwt_required
+from api.decorators.jwt_decorator import admin_required
 
 class ProfessorList(Resource):
     @jwt_required()
@@ -14,7 +15,7 @@ class ProfessorList(Resource):
         professorSchema = professor_schema.ProfessorSchema(many=True)
         return paginate(Professor, professorSchema)
     
-    @jwt_required()
+    @admin_required
     def post(self):
         # Cria o schema de validação de dados
         professorSchema = professor_schema.ProfessorSchema()
@@ -35,7 +36,7 @@ class ProfessorList(Resource):
             return make_response(professorSchema.dump(resultado), 201)
 
 class ProfessorDetail(Resource):
-    @jwt_required()
+    @jwt_required
     def get(self, id):
         professor = professor_service.listar_professor_id(id)
         
@@ -45,7 +46,7 @@ class ProfessorDetail(Resource):
         professorSchema = professor_schema.ProfessorSchema()
         return make_response(professorSchema.dump(professor), 200)
 
-    @jwt_required
+    @admin_required
     def put(self, id):
         professor = professor_service.listar_professor_id(id)
         if professor is None:
@@ -63,7 +64,7 @@ class ProfessorDetail(Resource):
                 professor = professor_service.listar_professor_id(id)
             return make_response(professorSchema.dump(professor), 200)
 
-    @jwt_required()
+    @admin_required
     def delete(self, id):
         resposta = professor_service.delete_professor(id)
         print(resposta)

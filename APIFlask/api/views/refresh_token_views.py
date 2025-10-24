@@ -1,10 +1,9 @@
 from flask_restful import Resource
 from api import api
 from ..schemas import login_schema
-from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity, jwt_required
+from flask_jwt_extended import create_access_token, create_refresh_token, get_jwt_identity
 from datetime import timedelta
-
-from ..services import usuario_service
+from flask_jwt_extended import jwt_required
 from flask import make_response, jsonify
 
 class RefreshList(Resource):
