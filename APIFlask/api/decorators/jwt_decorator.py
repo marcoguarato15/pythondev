@@ -45,7 +45,6 @@ def admin_required(fn):
         except Exception as e:
             return make_response(jsonify({"message":f"Token inválido"}))
         claims = get_jwt()
-        print("claims", claims["roles"])
         if claims["roles"] != "admin":
             return make_response(jsonify({"message":"Usuario não possui autorização"}), 403)
         else:
