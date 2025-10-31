@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Upload Flask</title>
+</head>
+<body>
+    <h2 style="text-align: center;">Upload de imagens com flask</h2>
+    <hr>
+    <p>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <ul>
+                    {% for message in messages %}
+                        <li>
+                            {{message}}
+                        </li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+        {% endwith %}
+    </p>
+    <p>
+        {% if filename %}
+            <div>
+                <img src="{{url_for('display_image', filename=filename)}}" alt="">
+            </div>
+        {% endif %}
+    </p>
+    <form action="{{url_for('upload_image')}}" enctype="multipart/form-data" method="POST">
+        <p>
+            <input type="file" name="file" id="file">
+        </p>
+        <p>
+            <input type="submit" value="Submit">
+        </p>
+    </form>
+</body>
+</html>
